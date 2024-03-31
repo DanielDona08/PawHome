@@ -1,0 +1,61 @@
+create table adoptiongiver(
+	id int auto_increment not null,
+    id_tipoDocumento int,
+    numero_documento bigint,
+    nombres varchar (60),
+    apellidos varchar (60),
+    fecha_nacimiento varchar (30),
+    email varchar (60),
+    celular varchar (11),
+    id_tipoSangre int, 
+    id_tipoGenero int, 
+    antecedentes bigint, 
+    direccion varchar (60),
+    primary key(id), 
+    foreign key(id_tipoDocumento) references tipos_documentos(id),
+    foreign key(id_tipoSangre) references tipos_sangre(id),
+    foreign key(id_tipoGenero) references tipos_genero(id)
+); 
+
+create table adopter(
+	id int auto_increment not null,
+    id_tipoDocumento int,
+    numero_documento bigint,
+    nombres varchar (60),
+    apellidos varchar (60),
+    fecha_nacimiento varchar (30),
+    email varchar (60),
+    celular varchar (11),
+    id_tipoSangre int, 
+    id_tipoGenero int, 
+    antecedentes bigint, 
+    direccion varchar (60),
+    primary key(id), 
+    foreign key(id_tipoDocumento) references tipos_documentos(id),
+    foreign key(id_tipoSangre) references tipos_sangre(id),
+    foreign key(id_tipoGenero) references tipos_genero(id)
+); 
+
+create table pets(
+	id int auto_increment not null, 
+    id_tipoMascota int, 
+    id_tipoRaza int, 
+    id_tipogeneroMascota int, 
+    condicion_saludMascota int, 
+    nombre_mascota varchar (60), 
+    comportamiento_mascota int, 
+    historia_mascota int, 
+    peso_mascota varchar (10), 
+    id_tamañoMascota int, 
+    id_colorMascota int, 
+    altura_mascota varchar (20), 
+    fecha_nacimientoMascota varchar (20), 
+    id_tiposangreMascota int,
+    primary key(id), 
+    foreign key(id_tipoMascota) references tipos_mascotas(id),
+    foreign key(id_tipoRaza) references tipos_razasMascotas(id),
+    foreign key(id_tipogeneroMascota) references tipos_generoMascotas(id),
+    foreign key(id_tamañoMascota) references tipos_tamañoMascotas(id),
+    foreign key(id_colorMascota) references tipos_colorMascotas(id),
+    foreign key(id_tiposangreMascota) references tipos_sangreMascotas(id)
+);
