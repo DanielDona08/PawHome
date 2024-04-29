@@ -61,15 +61,18 @@ CREATE TABLE usuarios (
     id_tipoGenero INT,
     antecedentes VARCHAR(100),
     direccion VARCHAR(60),
+    id_rol INT,
     FOREIGN KEY (id_tipoDocumento) REFERENCES tipos_documentos(id),
     FOREIGN KEY (id_tipoSangre) REFERENCES tipos_sangre(id),
-    FOREIGN KEY (id_tipoGenero) REFERENCES tipos_genero(id)
+    FOREIGN KEY (id_tipoGenero) REFERENCES tipos_genero(id),
+    FOREIGN KEY (id_rol) REFERENCES roles(id)
 );
 
 CREATE TABLE pets (
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     id_tipoMascota INT,
     id_tipoRaza INT,
+    genero VARCHAR (20),
     condicion_saludMascota VARCHAR(60),
     nombre_mascota VARCHAR(60),
     comportamiento_mascota VARCHAR(60),
@@ -91,6 +94,29 @@ create table info_usuarios(
 	id int auto_increment not null primary key,
     email varchar (60) not null unique,
     contraseña varchar (30)
+); 
+
+CREATE TABLE intentos_login (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT,
+    email VARCHAR(60),
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    exitoso BOOLEAN,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);
+
+CREATE TABLE sesiones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT,
+    token VARCHAR(255),
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    activa BOOLEAN,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);
+
+CREATE TABLE roles (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL
 ); 
 --------------------------------------------------------------------------------------------------------
 INSERT INTO tipos_documentos (abreviacion, descripcion) VALUES
@@ -116,6 +142,10 @@ INSERT INTO tipos_sangre (abreviacion, descripcion) VALUES
 INSERT INTO tipos_genero (abreviacion, descripcion) VALUES
     ('M', 'Masculino'),
     ('F', 'Femenino');
+
+INSERT INTO roles (nombre) VALUES
+    ('Administrador'),
+    ('Usuario');
 
 INSERT INTO tipos_mascotas (abreviacion, descripcion) VALUES
     ('P', 'Perro'),
@@ -191,5 +221,5 @@ INSERT INTO tipos_sangremascotas (abreviacion, descripcion, id_tipoMascota) VALU
 ----------------------------------------------------------------------------------------
 alter table usuarios add foreign key (email) references info_usuarios(email);
 
-drop database pawhomeprueba
+
 
