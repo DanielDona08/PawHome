@@ -1,0 +1,19 @@
+{% extends "plantilla.html" %}
+
+{% block titulo %} Crear Estudiantes {% endblock %}
+
+{% block contenido %}
+
+    <div class="card">
+        <div class="card-header">Crear un Estudiante</div>
+        <div class="card-body">
+            <h4 class="card-title">Datos del Estudiante</h4>
+
+            {% include "estudiantes/formulario.html" %}
+
+        </div>
+        <div class="card-footer text-muted">Boton para crear Estudiantes(Footer)</div>
+    </div>
+    
+
+{% endblock %}
