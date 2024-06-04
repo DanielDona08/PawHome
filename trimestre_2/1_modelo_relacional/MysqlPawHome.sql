@@ -1,74 +1,25 @@
-create database PawHome; 
-show databases;
-use PawHome; 
---------------------------------------------------------------------------------------------------------
-CREATE TABLE tipos_documentos (
-    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    abreviacion VARCHAR(3),
-    descripcion VARCHAR(50)
-);
-
-CREATE TABLE tipos_sangre (
-    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    abreviacion VARCHAR(3),
-    descripcion VARCHAR(50)
-);
-
-CREATE TABLE tipos_genero (
-    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    abreviacion VARCHAR(3),
-    descripcion VARCHAR(50)
-);
-
-CREATE TABLE tipos_mascotas (
-    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    abreviacion VARCHAR(3),
-    descripcion VARCHAR(50)
-);
-
-CREATE TABLE tipos_razasmascotas (
-    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    abreviacion VARCHAR(10),
-    descripcion VARCHAR(50),
-    id_tipoMascota INT,
-    FOREIGN KEY (id_tipoMascota) REFERENCES tipos_mascotas(id)
-);
-
-create table tipos_colorMascotas(
-    id int auto_increment not null primary key,
-    abreviacion varchar(10),
-    descripcion varchar(50)
-);
-
-CREATE TABLE tipos_sangremascotas (
-    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    abreviacion VARCHAR(10),
-    descripcion VARCHAR(50),
-    id_tipoMascota INT,
-    FOREIGN KEY (id_tipoMascota) REFERENCES tipos_mascotas(id)
-);
-
+create database PawHome;
+Use PawHome; 
+-----------------------------------------------------------------------------------
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     id_tipoDocumento INT,
     numero_documento BIGINT,
     nombres VARCHAR(60),
     apellidos VARCHAR(60),
-    fecha_nacimiento VARCHAR(30),
     email VARCHAR(60),
-    celular VARCHAR(11),
-    id_tipoSangre INT,
+    edad int(50),
+    numero_celular int(11),
     id_tipoGenero INT,
     antecedentes VARCHAR(100),
     direccion VARCHAR(60),
     id_rol INT,
     FOREIGN KEY (id_tipoDocumento) REFERENCES tipos_documentos(id),
-    FOREIGN KEY (id_tipoSangre) REFERENCES tipos_sangre(id),
     FOREIGN KEY (id_tipoGenero) REFERENCES tipos_genero(id),
     FOREIGN KEY (id_rol) REFERENCES roles(id)
 );
 
-CREATE TABLE pets (
+CREATE TABLE mascotas (
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     id_tipoMascota INT,
     id_tipoRaza INT,
@@ -80,7 +31,7 @@ CREATE TABLE pets (
     peso_mascota VARCHAR(10),
     id_colorMascota INT,
     altura_mascota VARCHAR(20),
-    fecha_nacimientoMascota VARCHAR(20),
+    fecha_nacimientoMascota DATE,
     id_tiposangreMascota INT,
     id_dueño INT,
     FOREIGN KEY (id_tipoMascota) REFERENCES tipos_mascotas(id),
@@ -88,6 +39,20 @@ CREATE TABLE pets (
     FOREIGN KEY (id_colorMascota) REFERENCES tipos_colormascotas(id),
     FOREIGN KEY (id_tiposangreMascota) REFERENCES tipos_sangremascotas(id),
     FOREIGN KEY (id_dueño) REFERENCES usuarios(id)
+);
+
+---------------------------------------------------------------------------------------------------
+
+CREATE TABLE tipos_documentos (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    abreviacion VARCHAR(3),
+    descripcion VARCHAR(50)
+);
+
+CREATE TABLE tipos_genero (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    abreviacion VARCHAR(3),
+    descripcion VARCHAR(50)
 );
 
 create table info_usuarios(
@@ -118,7 +83,41 @@ CREATE TABLE roles (
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL
 ); 
---------------------------------------------------------------------------------------------------------
+
+alter table usuarios add foreign key (email) references info_usuarios(email);
+
+--------------------------------------------------------------------------------------------
+
+CREATE TABLE tipos_mascotas (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    abreviacion VARCHAR(3),
+    descripcion VARCHAR(50)
+);
+
+CREATE TABLE tipos_razasmascotas (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    abreviacion VARCHAR(10),
+    descripcion VARCHAR(50),
+    id_tipoMascota INT,
+    FOREIGN KEY (id_tipoMascota) REFERENCES tipos_mascotas(id)
+);
+
+create table tipos_colorMascotas(
+    id int auto_increment not null primary key,
+    abreviacion varchar(10),
+    descripcion varchar(50)
+);
+
+CREATE TABLE tipos_sangremascotas (
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    abreviacion VARCHAR(10),
+    descripcion VARCHAR(50),
+    id_tipoMascota INT,
+    FOREIGN KEY (id_tipoMascota) REFERENCES tipos_mascotas(id)
+);
+
+--------------------------------------------------------------------------------------
+
 INSERT INTO tipos_documentos (abreviacion, descripcion) VALUES
     ('CC', 'Cedula de Ciudadania'),
     ('TI', 'Tarjeta de Identidad'),
@@ -129,15 +128,6 @@ INSERT INTO tipos_documentos (abreviacion, descripcion) VALUES
     ('DNI', 'Documento Nacional de Identidad'),
     ('PRP', 'Permiso de Residencia Permanente');
 
-INSERT INTO tipos_sangre (abreviacion, descripcion) VALUES
-    ('O+', 'O positivo'),
-    ('O-', 'O negativo'),
-    ('A+', 'A positivo'),
-    ('A-', 'A negativo'),
-    ('B+', 'B positivo'),
-    ('B-', 'B negativo'),
-    ('AB+', 'AB positivo'),
-    ('AB-', 'AB negativo');
 
 INSERT INTO tipos_genero (abreviacion, descripcion) VALUES
     ('M', 'Masculino'),
@@ -217,9 +207,3 @@ INSERT INTO tipos_sangremascotas (abreviacion, descripcion, id_tipoMascota) VALU
     ('B-', 'B negativo', 2),  
     ('AB+', 'AB positivo', 2),   
     ('AB-', 'AB negativo', 2);   
-
-----------------------------------------------------------------------------------------
-alter table usuarios add foreign key (email) references info_usuarios(email);
-
-
-
