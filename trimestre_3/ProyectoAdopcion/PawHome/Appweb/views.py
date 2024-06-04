@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-# Create your views here.
+  
+
 
 def PawHome(request):
     return HttpResponse('Bienvenidos a PawHome')
@@ -13,5 +14,22 @@ def inicio(request):
 
 def adopcion(request):
     return render(request, 'paginas/adopcion.html')
+
+def publicacion(request):
+    return render(request, 'paginas/publicacion.html')
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
 
 

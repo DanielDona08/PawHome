@@ -17,6 +17,33 @@
                 <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre completo" required>
             </div>
             <div class="form-group">
+                <label for="edad">Edad</label>
+                <input type="number" class="form-control" id="edad" placeholder="Ingresa tu edad" required>
+            </div>
+            <div class="form-group">
+                <label for="tipoDocumento">Tipo de documento</label>
+                <select class="form-control" id="tipoDocumento" required>
+                    <option value="CC">Cédula de Ciudadanía</option>
+                    <option value="CE">Cédula de Extranjería</option>
+                    <option value="PP">Pasaporte</option>
+                    <option value="RCN">Registro Civil de Nacimiento</option>
+                    <option value="TRE">Tarjeta de Registro de Extranjería</option>
+                    <option value="DNI">Documento Nacional de Identidad</option>
+                    <option value="PRP">Permiso de Residencia Permanente</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="numeroDocumento">Número de documento</label>
+                <input type="text" class="form-control" id="numeroDocumento" placeholder="Ingresa tu número de documento" required>
+            </div>
+            <div class="form-group">
+                <label for="genero">Género</label>
+                <select class="form-control" id="genero" required>
+                    <option value="hombre">Hombre</option>
+                    <option value="mujer">Mujer</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="telefono">Teléfono</label>
                 <input type="tel" class="form-control" id="telefono" placeholder="Ingresa tu teléfono" required>
             </div>
@@ -24,40 +51,19 @@
                 <label for="email">Correo electrónico</label>
                 <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required>
             </div>
+            <div class="form-group">
+                <label for="antecedentes">Historial de mascotas</label>
+                <textarea class="form-control" id="antecedentes" rows="3" placeholder="¿Ha tenido o tiene mascotas viviendo con usted actualmente?" required></textarea>
+            </div>
 
             <!-- Información de la mascota -->
-            <div class="form-group">
-                <label for="nombreMascota">Nombre de la mascota</label>
-                <input type="text" class="form-control" id="nombreMascota" placeholder="Ingresa el nombre de la mascota" required>
-            </div>
-            <div class="form-group">
-                <label for="tipoMascota">Tipo de mascota</label>
-                <select class="form-control" id="tipoMascota" required>
-                    <option>Perro</option>
-                    <option>Gato</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="edadMascota">Edad de la mascota</label>
-                <input type="number" class="form-control" id="edadMascota" placeholder="Ingresa la edad de la mascota en años" required>
-            </div>
-            <div class="form-group">
-                <label for="descripcion">Descripción</label>
-                <textarea class="form-control" id="descripcion" rows="3" placeholder="Proporcione una breve descripción de la mascota" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="fotoMascota">Foto de la mascota</label>
-                <input type="file" class="form-control-file" id="fotoMascota" required>
-            </div>
+           
+    
 
             <!-- Información adicional -->
             <div class="form-group">
                 <label for="motivo">Motivo de la adopción</label>
-                <textarea class="form-control" id="motivo" rows="3" placeholder="Explica el motivo por el cual deseas dar en adopción a la mascota" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="condiciones">Condiciones de adopción</label>
-                <textarea class="form-control" id="condiciones" rows="3" placeholder="Establece las condiciones para la adopción de la mascota" required></textarea>
+                <textarea class="form-control" id="motivo" rows="3" placeholder="Explica el motivo por el cual deseas tener una mascota" required></textarea>
             </div>
 
             <!-- Botón de envío -->
@@ -70,3 +76,4 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
