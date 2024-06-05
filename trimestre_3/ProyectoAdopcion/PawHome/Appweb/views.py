@@ -1,8 +1,10 @@
-from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import render
+from .forms import BusquedaAvanzadaForm
+
+
 
   
-
 
 def PawHome(request):
     return HttpResponse('Bienvenidos a PawHome')
@@ -17,6 +19,10 @@ def adopcion(request):
 
 def publicacion(request):
     return render(request, 'paginas/publicacion.html')
+
+def busqueda_avanzada(request):
+    form = BusquedaAvanzadaForm()
+    return render(request, 'paginas/busqueda_avanzada.html', {'form': form})
 
 
 
