@@ -1,41 +1,36 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
-class InfoUsuarios(models.Model):
-    email = models.CharField(unique=True, max_length=60)
-    contraseña = models.CharField(max_length=30, blank=True, null=True)
+class InfoUsuarios(AbstractBaseUser):
+    email = models.EmailField(unique=True, max_length=60)
+    password = models.CharField(max_length=128, blank=True, null=True)
+
+    USERNAME_FIELD = 'email'
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'info_usuarios'
 
-
-class IntentosLogin(models.Model):
-    id_usuario = models.ForeignKey('Usuarios', models.DO_NOTHING, db_column='id_usuario', blank=True, null=True)
-    email = models.CharField(max_length=60, blank=True, null=True)
-    fecha = models.DateTimeField()
-    exitoso = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'intentos_login'
+    def __str__(self):
+        return self.email
 
 
 class Mascotas(models.Model):
-    id_tipomascota = models.ForeignKey('TiposMascotas', models.DO_NOTHING, db_column='id_tipoMascota', blank=True, null=True)  # Field name made lowercase.
-    id_tiporaza = models.ForeignKey('TiposRazasmascotas', models.DO_NOTHING, db_column='id_tipoRaza', blank=True, null=True)  # Field name made lowercase.
+    id_tipomascota = models.ForeignKey('TiposMascotas', models.DO_NOTHING, db_column='id_tipoMascota', blank=True, null=True)
+    id_tiporaza = models.ForeignKey('TiposRazasmascotas', models.DO_NOTHING, db_column='id_tipoRaza', blank=True, null=True)
     foto = models.CharField(max_length=255, blank=True, null=True)
     genero = models.CharField(max_length=20, blank=True, null=True)
-    condicion_saludmascota = models.CharField(db_column='condicion_saludMascota', max_length=60, blank=True, null=True)  # Field name made lowercase.
+    condicion_saludmascota = models.CharField(db_column='condicion_saludMascota', max_length=60, blank=True, null=True)
     nombre_mascota = models.CharField(max_length=60, blank=True, null=True)
     comportamiento_mascota = models.CharField(max_length=60, blank=True, null=True)
     historia_mascota = models.CharField(max_length=60, blank=True, null=True)
     peso_mascota = models.CharField(max_length=10, blank=True, null=True)
-    id_colormascota = models.ForeignKey('TiposColormascotas', models.DO_NOTHING, db_column='id_colorMascota', blank=True, null=True)  # Field name made lowercase.
+    id_colormascota = models.ForeignKey('TiposColormascotas', models.DO_NOTHING, db_column='id_colorMascota', blank=True, null=True)
     altura_mascota = models.CharField(max_length=20, blank=True, null=True)
-    fecha_nacimientomascota = models.DateField(db_column='fecha_nacimientoMascota', blank=True, null=True)  # Field name made lowercase.
-    id_tiposangremascota = models.ForeignKey('TiposSangremascotas', models.DO_NOTHING, db_column='id_tiposangreMascota', blank=True, null=True)  # Field name made lowercase.
-    id_dueño = models.ForeignKey('Usuarios', models.DO_NOTHING, db_column='id_due±o', blank=True, null=True)
+    fecha_nacimientomascota = models.DateField(db_column='fecha_nacimientoMascota', blank=True, null=True)
+    id_tiposangremascota = models.ForeignKey('TiposSangremascotas', models.DO_NOTHING, db_column='id_tiposangreMascota', blank=True, null=True)
+    id_dueño = models.ForeignKey('Usuarios', models.DO_NOTHING, db_column='id_dueño', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -100,7 +95,7 @@ class TiposMascotas(models.Model):
 class TiposRazasmascotas(models.Model):
     abreviacion = models.CharField(max_length=10, blank=True, null=True)
     descripcion = models.CharField(max_length=50, blank=True, null=True)
-    id_tipomascota = models.ForeignKey(TiposMascotas, models.DO_NOTHING, db_column='id_tipoMascota', blank=True, null=True)  # Field name made lowercase.
+    id_tipomascota = models.ForeignKey(TiposMascotas, models.DO_NOTHING, db_column='id_tipoMascota', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -110,7 +105,7 @@ class TiposRazasmascotas(models.Model):
 class TiposSangremascotas(models.Model):
     abreviacion = models.CharField(max_length=10, blank=True, null=True)
     descripcion = models.CharField(max_length=50, blank=True, null=True)
-    id_tipomascota = models.ForeignKey(TiposMascotas, models.DO_NOTHING, db_column='id_tipoMascota', blank=True, null=True)  # Field name made lowercase.
+    id_tipomascota = models.ForeignKey(TiposMascotas, models.DO_NOTHING, db_column='id_tipoMascota', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -118,18 +113,18 @@ class TiposSangremascotas(models.Model):
 
 
 class Usuarios(models.Model):
-    id_tipodocumento = models.ForeignKey(TiposDocumentos, models.DO_NOTHING, db_column='id_tipoDocumento', blank=True, null=True)  # Field name made lowercase.
+    info_usuario = models.OneToOneField(InfoUsuarios, on_delete=models.CASCADE, primary_key=True, related_name='usuario')
+    id_tipodocumento = models.ForeignKey('TiposDocumentos', models.DO_NOTHING, db_column='id_tipoDocumento', blank=True, null=True)
     numero_documento = models.BigIntegerField(blank=True, null=True)
     nombres = models.CharField(max_length=60, blank=True, null=True)
     apellidos = models.CharField(max_length=60, blank=True, null=True)
-    email = models.ForeignKey(InfoUsuarios, models.DO_NOTHING, db_column='email', to_field='email', blank=True, null=True)
     edad = models.IntegerField(blank=True, null=True)
-    numero_celular = models.IntegerField(blank=True, null=True)
-    id_tipogenero = models.ForeignKey(TiposGenero, models.DO_NOTHING, db_column='id_tipoGenero', blank=True, null=True)  # Field name made lowercase.
+    telefono = models.IntegerField(default=0, null=False, blank=False)
+    id_tipogenero = models.ForeignKey('TiposGenero', models.DO_NOTHING, db_column='id_tipoGenero', blank=True, null=True)
     antecedentes = models.CharField(max_length=100, blank=True, null=True)
     direccion = models.CharField(max_length=60, blank=True, null=True)
-    id_rol = models.ForeignKey(Roles, models.DO_NOTHING, db_column='id_rol', blank=True, null=True)
+    id_rol = models.ForeignKey('Roles', models.DO_NOTHING, db_column='id_rol', blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'usuarios'
