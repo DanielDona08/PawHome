@@ -1,14 +1,19 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
-class InfoUsuarios(models.Model):
+class InfoUsuarios(AbstractBaseUser):
     email = models.EmailField(unique=True, max_length=60)
     password = models.CharField(max_length=128, blank=True, null=True)
+
+    USERNAME_FIELD = 'email'
 
     class Meta:
         managed = True
         db_table = 'info_usuarios'
 
+    def __str__(self):
+        return self.email
 
 
 class Mascotas(models.Model):
