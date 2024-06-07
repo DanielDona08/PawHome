@@ -100,7 +100,7 @@ WSGI_APPLICATION = 'PawHome.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'PawHome',
+        'NAME': 'pawhome',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
