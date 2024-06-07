@@ -49,14 +49,13 @@
                     </ul>
                     <form class="d-flex" role="search" action="{% url 'busqueda_avanzada' %}">
                         <input class="form-control me-2" type="search" placeholder="Búsqueda Avanzada" aria-label="Search" data-bs-toggle="modal" data-bs-target="#busquedaAvanzadaModal">
-                        
                     </form>
                     <ul class="navbar-nav ms-3">
                         <li class="nav-item">
-                            <a class="btn btn-light me-2" href="<!-- ***URL_INICIAR_SESION*** -->">Iniciar sesión</a>
+                            <a class="btn btn-light me-2" href="{% url 'iniciar_sesion' %}">Iniciar sesión</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-primary" href="<!-- ***URL_CREAR_CUENTA*** -->">Crear cuenta</a>
+                            <a class="btn btn-primary" href="{% url 'registrarse' %}">Crear cuenta</a>
                         </li>
                     </ul>
                 </div>
