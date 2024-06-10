@@ -10,56 +10,97 @@
 <body>
     <div class="container mt-5">
         <h2 class="text-center">Formulario de publicación de mascotas</h2>
-        <form>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             
             <div class="form-group">
                 <label for="nombre">Nombre completo</label>
-                <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre completo" required>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre completo" required>
             </div>
             <div class="form-group">
                 <label for="telefono">Teléfono</label>
-                <input type="tel" class="form-control" id="telefono" placeholder="Ingresa tu teléfono" required>
+                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ingresa tu teléfono" required>
             </div>
             <div class="form-group">
                 <label for="email">Correo electrónico</label>
-                <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
             </div>
-
             
             <div class="form-group">
                 <label for="nombreMascota">Nombre de la mascota</label>
-                <input type="text" class="form-control" id="nombreMascota" placeholder="Ingresa el nombre de la mascota" required>
+                <input type="text" class="form-control" id="nombreMascota" name="nombreMascota" placeholder="Ingresa el nombre de la mascota" required>
             </div>
             <div class="form-group">
                 <label for="tipoMascota">Tipo de mascota</label>
-                <select class="form-control" id="tipoMascota" required>
-                    <option>Perro</option>
-                    <option>Gato</option>
+                <select class="form-control" id="tipoMascota" name="tipoMascota" required>
+                    {% for tipo in tipos_mascotas %}
+                        <option value="{{ tipo.id }}">{{ tipo.descripcion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="razaMascota">Raza de la mascota</label>
+                <select class="form-control" id="razaMascota" name="razaMascota" required>
+                    {% for raza in tipos_razas %}
+                        <option value="{{ raza.id }}">{{ raza.descripcion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="genero">Género</label>
+                <select class="form-control" id="genero" name="genero" required>
+                    <option value="Macho">Macho</option>
+                    <option value="Hembra">Hembra</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="edadMascota">Edad de la mascota</label>
-                <input type="number" class="form-control" id="edadMascota" placeholder="Ingresa la edad de la mascota en años" required>
+                <input type="number" class="form-control" id="edadMascota" name="edadMascota" placeholder="Ingresa la edad de la mascota en años" required>
             </div>
             <div class="form-group">
-                <label for="descripcion">Descripción</label>
-                <textarea class="form-control" id="descripcion" rows="3" placeholder="Proporcione una breve descripción de la mascota" required></textarea>
+                <label for="colorMascota">Color de la mascota</label>
+                <select class="form-control" id="colorMascota" name="colorMascota" required>
+                    {% for color in tipos_colores %}
+                        <option value="{{ color.id }}">{{ color.descripcion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fechaNacimiento">Fecha de nacimiento de la mascota</label>
+                <input type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" required>
+            </div>
+            <div class="form-group">
+                <label for="pesoMascota">Peso de la mascota</label>
+                <input type="text" class="form-control" id="pesoMascota" name="pesoMascota" placeholder="Ingresa el peso de la mascota" required>
+            </div>
+            <div class="form-group">
+                <label for="alturaMascota">Altura de la mascota</label>
+                <input type="text" class="form-control" id="alturaMascota" name="alturaMascota" placeholder="Ingresa la altura de la mascota" required>
+            </div>
+            <div class="form-group">
+                <label for="tipoSangreMascota">Tipo de sangre de la mascota</label>
+                <select class="form-control" id="tipoSangreMascota" name="tipoSangreMascota" required>
+                    {% for sangre in tipos_sangre %}
+                        <option value="{{ sangre.id }}">{{ sangre.descripcion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="condicionSalud">Condición de salud de la mascota</label>
+                <input type="text" class="form-control" id="condicionSalud" name="condicionSalud" placeholder="Ingresa la condición de salud de la mascota" required>
+            </div>
+            <div class="form-group">
+                <label for="comportamiento">Comportamiento de la mascota</label>
+                <input type="text" class="form-control" id="comportamiento" name="comportamiento" placeholder="Ingresa el comportamiento de la mascota" required>
+            </div>
+            <div class="form-group">
+                <label for="historia">Historia de la mascota</label>
+                <input type="text" class="form-control" id="historia" name="historia" placeholder="Ingresa la historia de la mascota" required>
             </div>
             <div class="form-group">
                 <label for="fotoMascota">Foto de la mascota</label>
-                <input type="file" class="form-control-file" id="fotoMascota" required>
+                <input type="file" class="form-control-file" id="fotoMascota" name="fotoMascota" required>
             </div>
-
-            
-            <div class="form-group">
-                <label for="motivo">Motivo de la adopción</label>
-                <textarea class="form-control" id="motivo" rows="3" placeholder="Explica el motivo por el cual deseas dar en adopción a la mascota" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="condiciones">Condiciones de adopción</label>
-                <textarea class="form-control" id="condiciones" rows="3" placeholder="Establece las condiciones para la adopción de la mascota" required></textarea>
-            </div>
-
             
             <button type="submit" class="btn btn-primary btn-block">Enviar</button>
         </form>

@@ -10,21 +10,26 @@ def iniciar_sesion(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        
         try:
             usuario_info = InfoUsuarios.objects.get(email=email)
-            
-            if check_password(password, usuario_info.password):
-                return render(request, 'exito.html', {'mensaje': 'Inicio de sesión exitoso'})
+            print("Usuario encontrado:", usuario_info.email)
+            if usuario_info.check_password(password):
+                print("Contraseña válida")
+                user = authenticate(request, email=email, password=password)
+                print("Resultado de authenticate:", user)
+                if user is not None:
+                    login(request, user)
+                    messages.success(request, '¡Inicio de sesión exitoso!')
+                    return redirect('inicio')
+                else:
+                    messages.error(request, 'Hubo un problema al iniciar sesión. Por favor, inténtalo de nuevo.')
             else:
-                error_message = "Contraseña incorrecta. Por favor, inténtalo de nuevo."
-                return render(request, 'iniciar_sesion.html', {'error_message': error_message})
+                print("Contraseña incorrecta")
+                messages.error(request, 'El correo electrónico o la contraseña son incorrectos.')
         except InfoUsuarios.DoesNotExist:
-            error_message = "No se encontró ningún usuario con este correo electrónico."
-            return render(request, 'iniciar_sesion.html', {'error_message': error_message})
-    else:
-        return render(request, 'iniciar_sesion.html')
+            messages.error(request, 'El correo electrónico o la contraseña son incorrectos.')
 
+    return render(request, 'iniciar_sesion.html')
 
 
 def cerrar_sesion(request):

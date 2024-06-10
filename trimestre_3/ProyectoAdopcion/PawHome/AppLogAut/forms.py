@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.hashers import make_password  # Importar make_password
+
 from .models import InfoUsuarios
 
 class RegistroForm(forms.ModelForm):
@@ -13,9 +15,10 @@ class RegistroForm(forms.ModelForm):
 
     def save(self, commit=True):
         usuario_info = super().save(commit=False)
-        usuario_info.password = self.cleaned_data['password']
+        usuario_info.password = make_password(self.cleaned_data['password'])  # Cifrar la contraseña
         if commit:
             usuario_info.save()
         return usuario_info
+
 
         
