@@ -8,3 +8,7 @@ class BusquedaAvanzadaForm(forms.Form):
     color_mascota = forms.ModelChoiceField(queryset=TiposColormascotas.objects.all(), empty_label=None)
     tamano_mascota = forms.ChoiceField(choices=[('pequeno', 'Pequeño'), ('mediano', 'Mediano'), ('grande', 'Grande')])
 
+class PublicacionMascotaForm(forms.ModelForm):
+    class Meta:
+        model = Mascotas
+        fields = '__all__'

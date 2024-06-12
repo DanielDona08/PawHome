@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib.auth.hashers import check_password, make_password
 from django.utils import timezone
 
-
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -73,7 +72,7 @@ class InfoUsuarios(AbstractBaseUser, PermissionsMixin):
 class Mascotas(models.Model):
     id_tipomascota = models.ForeignKey('TiposMascotas', models.DO_NOTHING, db_column='id_tipoMascota', blank=True, null=True)
     id_tiporaza = models.ForeignKey('TiposRazasmascotas', models.DO_NOTHING, db_column='id_tipoRaza', blank=True, null=True)
-    foto = models.CharField(max_length=255, blank=True, null=True)
+    foto = models.ImageField(upload_to='fotos_mascotas', blank=True, null=True)
     genero = models.CharField(max_length=20, blank=True, null=True)
     condicion_saludmascota = models.CharField(db_column='condicion_saludMascota', max_length=60, blank=True, null=True)
     nombre_mascota = models.CharField(max_length=60, blank=True, null=True)
@@ -90,14 +89,12 @@ class Mascotas(models.Model):
         managed = False
         db_table = 'mascotas'
 
-
 class Roles(models.Model):
     nombre = models.CharField(max_length=50)
 
     class Meta:
         managed = False
         db_table = 'roles'
-
 
 class Sesiones(models.Model):
     id_usuario = models.ForeignKey('Usuarios', models.DO_NOTHING, db_column='id_usuario', blank=True, null=True)
@@ -109,7 +106,6 @@ class Sesiones(models.Model):
         managed = False
         db_table = 'sesiones'
 
-
 class TiposColormascotas(models.Model):
     abreviacion = models.CharField(max_length=10, blank=True, null=True)
     descripcion = models.CharField(max_length=50, blank=True, null=True)
@@ -117,7 +113,6 @@ class TiposColormascotas(models.Model):
     class Meta:
         managed = False
         db_table = 'tipos_colormascotas'
-
 
 class TiposDocumentos(models.Model):
     abreviacion = models.CharField(max_length=3, blank=True, null=True)
@@ -127,7 +122,6 @@ class TiposDocumentos(models.Model):
         managed = False
         db_table = 'tipos_documentos'
 
-
 class TiposGenero(models.Model):
     abreviacion = models.CharField(max_length=3, blank=True, null=True)
     descripcion = models.CharField(max_length=50, blank=True, null=True)
@@ -136,7 +130,6 @@ class TiposGenero(models.Model):
         managed = False
         db_table = 'tipos_genero'
 
-
 class TiposMascotas(models.Model):
     abreviacion = models.CharField(max_length=3, blank=True, null=True)
     descripcion = models.CharField(max_length=50, blank=True, null=True)
@@ -144,7 +137,6 @@ class TiposMascotas(models.Model):
     class Meta:
         managed = False
         db_table = 'tipos_mascotas'
-
 
 class TiposRazasmascotas(models.Model):
     abreviacion = models.CharField(max_length=10, blank=True, null=True)
@@ -155,7 +147,6 @@ class TiposRazasmascotas(models.Model):
         managed = False
         db_table = 'tipos_razasmascotas'
 
-
 class TiposSangremascotas(models.Model):
     abreviacion = models.CharField(max_length=10, blank=True, null=True)
     descripcion = models.CharField(max_length=50, blank=True, null=True)
@@ -164,7 +155,6 @@ class TiposSangremascotas(models.Model):
     class Meta:
         managed = False
         db_table = 'tipos_sangremascotas'
-
 
 class Usuarios(models.Model):
     info_usuario = models.OneToOneField(InfoUsuarios, on_delete=models.CASCADE, primary_key=True, related_name='usuario')

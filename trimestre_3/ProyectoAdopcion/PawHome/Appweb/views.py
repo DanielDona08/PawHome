@@ -1,19 +1,43 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
-from .forms import BusquedaAvanzadaForm
+from .forms import BusquedaAvanzadaForm, PublicacionMascotaForm
 from .models import *
+from django.contrib.auth.decorators import login_required
 
 def PawHome(request):
     return HttpResponse('Bienvenidos a PawHome')
 
 def inicio(request):
-    return render(request, 'paginas/inicio.html')
+    mascotas = Mascotas.objects.all()
+    context = {'mascotas': mascotas}
+    return render(request, 'paginas/inicio.html', context)
 
 def adopcion(request):
     return render(request, 'paginas/adopcion.html')
 
 def publicacion(request):
-    return render(request, 'paginas/publicacion.html')
+    form = PublicacionMascotaForm()
+
+    if request.method == 'POST':
+        form = PublicacionMascotaForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('inicio')
+
+    tipos_mascotas = TiposMascotas.objects.all()
+    tipos_razas = TiposRazasmascotas.objects.all()
+    tipos_colores = TiposColormascotas.objects.all()
+    tipos_sangre = TiposSangremascotas.objects.all()
+
+    context = {
+        'form': form,
+        'tipos_mascotas': tipos_mascotas,
+        'tipos_razas': tipos_razas,
+        'tipos_colores': tipos_colores,
+        'tipos_sangre': tipos_sangre,
+    }
+
+    return render(request, 'paginas/publicacion.html', context)
 
 def busqueda_avanzada(request):
     form = BusquedaAvanzadaForm()
@@ -27,7 +51,6 @@ def busqueda_avanzada(request):
             color_mascota_id = form.cleaned_data.get('color_mascota')
             tamano_mascota = form.cleaned_data.get('tamano_mascota')
 
-            # Filtrar las razas según el tipo de mascota seleccionado
             if tipo_mascota_id:
                 razas = TiposRazasmascotas.objects.filter(tipo_mascota=tipo_mascota_id)
                 form.fields['raza_mascota'].queryset = razas
@@ -42,64 +65,10 @@ def busqueda_avanzada(request):
                 tamano=tamano_mascota
             )
             return render(request, 'paginas/resultados_busqueda.html', {'resultados': resultados_busqueda})
-    
+
     return render(request, 'paginas/busqueda_avanzada.html', {'form': form})
 
-
-def publicar_mascota(request):
-    # Obtener todos los tipos de datos necesarios para los selectores
-    tipos_mascotas = TiposMascotas.objects.all()
-    tipos_razas = TiposRazasmascotas.objects.all()
-    tipos_colores = TiposColormascotas.objects.all()
-    tipos_sangre = TiposSangremascotas.objects.all()
-    
-    if request.method == 'POST':
-        # Obtener datos del formulario
-        nombre = request.POST['nombre']
-        telefono = request.POST['telefono']
-        email = request.POST['email']
-        nombre_mascota = request.POST['nombreMascota']
-        tipo_mascota = TiposMascotas.objects.get(id=request.POST['tipoMascota'])
-        raza_mascota = TiposRazasmascotas.objects.get(id=request.POST['razaMascota'])
-        genero = request.POST['genero']
-        edad = request.POST['edadMascota']
-        color_mascota = TiposColormascotas.objects.get(id=request.POST['colorMascota'])
-        fecha_nacimiento = request.POST['fechaNacimiento']
-        peso = request.POST['pesoMascota']
-        altura = request.POST['alturaMascota']
-        tipo_sangre = TiposSangremascotas.objects.get(id=request.POST['tipoSangreMascota'])
-        condicion_salud = request.POST['condicionSalud']
-        comportamiento = request.POST['comportamiento']
-        historia = request.POST['historia']
-        foto = request.FILES['fotoMascota']
-        
-        # Crear y guardar la nueva mascota
-        nueva_mascota = Mascotas(
-            id_tipomascota=tipo_mascota,
-            id_tiporaza=raza_mascota,
-            foto=foto.name,
-            genero=genero,
-            condicion_saludmascota=condicion_salud,
-            nombre_mascota=nombre_mascota,
-            comportamiento_mascota=comportamiento,
-            historia_mascota=historia,
-            peso_mascota=peso,
-            id_colormascota=color_mascota,
-            altura_mascota=altura,
-            fecha_nacimientomascota=fecha_nacimiento,
-            id_tiposangremascota=tipo_sangre,
-            id_dueño=request.user  # Suponiendo que el usuario está autenticado y es el dueño
-        )
-        nueva_mascota.save()
-        
-        # Redirigir a otra página después de guardar la mascota
-        return redirect('index')
-
-    # Pasar los tipos de datos necesarios al contexto de la plantilla
-    context = {
-        'tipos_mascotas': tipos_mascotas,
-        'tipos_razas': tipos_razas,
-        'tipos_colores': tipos_colores,
-        'tipos_sangre': tipos_sangre
-    }
-    return render(request, 'publicacion.html', context)
+def obtener_razas_mascota(request):
+    razas = TiposRazasmascotas.objects.all()
+    razas_list = [{'id': raza.id, 'descripcion': raza.descripcion} for raza in razas]
+    return JsonResponse({'razas': razas_list})
