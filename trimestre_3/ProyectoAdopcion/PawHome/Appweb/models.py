@@ -85,6 +85,7 @@ class Mascotas(models.Model):
     id_tiposangremascota = models.ForeignKey('TiposSangremascotas', models.DO_NOTHING, db_column='id_tiposangreMascota', blank=True, null=True)
     id_dueño = models.ForeignKey('Usuarios', models.DO_NOTHING, db_column='id_dueño', blank=True, null=True)
 
+
     class Meta:
         managed = False
         db_table = 'mascotas'

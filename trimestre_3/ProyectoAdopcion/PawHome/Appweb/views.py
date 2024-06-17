@@ -1,5 +1,5 @@
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BusquedaAvanzadaForm, PublicacionMascotaForm
 from .models import *
 from django.contrib.auth.decorators import login_required
@@ -7,8 +7,9 @@ from django.contrib.auth.decorators import login_required
 def PawHome(request):
     return HttpResponse('Bienvenidos a PawHome')
 
+
 def inicio(request):
-    mascotas = Mascotas.objects.all()
+    mascotas = Mascotas.objects.all().order_by('-id')  # Ordenar de más reciente a más antiguo
     context = {'mascotas': mascotas}
     return render(request, 'paginas/inicio.html', context)
 
@@ -16,13 +17,18 @@ def adopcion(request):
     return render(request, 'paginas/adopcion.html')
 
 def publicacion(request):
-    form = PublicacionMascotaForm()
-
     if request.method == 'POST':
         form = PublicacionMascotaForm(request.POST, request.FILES)
+        print("POST data:", request.POST)
+        print("FILES data:", request.FILES)
         if form.is_valid():
+            print("Form is valid. Saving...")
             form.save()
             return redirect('inicio')
+        else:
+            print("Form errors:", form.errors)
+    else:
+        form = PublicacionMascotaForm()
 
     tipos_mascotas = TiposMascotas.objects.all()
     tipos_razas = TiposRazasmascotas.objects.all()
@@ -38,6 +44,7 @@ def publicacion(request):
     }
 
     return render(request, 'paginas/publicacion.html', context)
+
 
 def busqueda_avanzada(request):
     form = BusquedaAvanzadaForm()
@@ -72,3 +79,10 @@ def obtener_razas_mascota(request):
     razas = TiposRazasmascotas.objects.all()
     razas_list = [{'id': raza.id, 'descripcion': raza.descripcion} for raza in razas]
     return JsonResponse({'razas': razas_list})
+
+def detalle_mascota(request, pk):
+    mascota = get_object_or_404(Mascotas, pk=pk)
+    context = {
+        'mascota': mascota
+    }
+    return render(request, 'paginas/detalle_mascota.html', context)

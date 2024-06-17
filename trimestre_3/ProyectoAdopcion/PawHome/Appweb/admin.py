@@ -4,3 +4,4 @@ from .models import *
 
 admin.site.register(Usuarios)
 admin.site.register(InfoUsuarios)
+admin.site.register(Mascotas)
