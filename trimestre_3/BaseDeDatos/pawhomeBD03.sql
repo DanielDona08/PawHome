@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-06-2024 a las 00:47:28
+-- Tiempo de generación: 18-06-2024 a las 23:14:47
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -129,7 +129,11 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (65, 'Can add usuarios', 17, 'add_usuarios'),
 (66, 'Can change usuarios', 17, 'change_usuarios'),
 (67, 'Can delete usuarios', 17, 'delete_usuarios'),
-(68, 'Can view usuarios', 17, 'view_usuarios');
+(68, 'Can view usuarios', 17, 'view_usuarios'),
+(69, 'Can add favoritos', 18, 'add_favoritos'),
+(70, 'Can change favoritos', 18, 'change_favoritos'),
+(71, 'Can delete favoritos', 18, 'delete_favoritos'),
+(72, 'Can view favoritos', 18, 'view_favoritos');
 
 -- --------------------------------------------------------
 
@@ -217,6 +221,7 @@ CREATE TABLE `django_content_type` (
 
 INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (1, 'admin', 'logentry'),
+(18, 'Appweb', 'favoritos'),
 (16, 'Appweb', 'infousuarios'),
 (7, 'Appweb', 'mascotas'),
 (8, 'Appweb', 'roles'),
@@ -291,7 +296,7 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
-('nf46e8oa4cxrcef922nj4f549lpkb8nu', '.eJxVjEEOwiAQRe_C2pAC7VBcuvcMZIYZpGpoUtqV8e7apAvd_vfef6mI21ri1mSJE6uzMk6dfkfC9JC6E75jvc06zXVdJtK7og_a9HVmeV4O9--gYCvfWgyZkNBnZqSBs4CzKeDYA_IAwtb4LmSLo0vWMftgBHqB3LEHQnLq_QE7NTkm:1sGnmV:ifSB2TvxhthMFPUPqXF9CXzLKb_nc4l_fgvpDGiDZQQ', '2024-06-24 22:46:27.940265');
+('hcx7cjpxpnzvlfiqe33dcpiy38ynfv8t', '.eJxVjEsOwjAMBe-SNYrSxEljlux7hsp2DS2gROpnhbg7VOoCtm9m3sv0tK1jvy0699NgzqYBc_odmeShZSfDncqtWqllnSe2u2IPutiuDvq8HO7fwUjL-K1D0uxFXEQRQs_ArAmjYObGA2jGVnIKwtFh4NbF4Ag0KSXweCVn3h8Iuzfd:1sJg2C:MswZPnbWlSTBU-oUv5v8h2zdVqpmJ0rgUWgtizLPa5E', '2024-07-02 21:06:32.057700');
 
 -- --------------------------------------------------------
 
@@ -315,7 +320,8 @@ CREATE TABLE `info_usuarios` (
 --
 
 INSERT INTO `info_usuarios` (`id`, `email`, `password`, `last_login`, `is_active`, `is_staff`, `date_joined`, `is_superuser`) VALUES
-(13, 'admin@gmail.com', 'pbkdf2_sha256$720000$9scF9IxEJ4JYRTRfJNr73s$asK+v/R0RaGCb6An4BQF/kJz1WGXJmVOqWeXfAPg+GE=', '2024-06-10 22:46:27.933262', 1, 1, '2024-06-10 22:44:10.043363', 1);
+(13, 'admin@gmail.com', 'pbkdf2_sha256$720000$9scF9IxEJ4JYRTRfJNr73s$asK+v/R0RaGCb6An4BQF/kJz1WGXJmVOqWeXfAPg+GE=', '2024-06-10 22:46:27.933262', 1, 1, '2024-06-10 22:44:10.043363', 1),
+(14, 'prueba@gmail.com', 'pbkdf2_sha256$720000$qYNFGYsStswNzoZ5rWjhH3$bXjpt4qCVtVblJ3nn/GY5SGaXCtWrPeFLGEWgYM6YU8=', '2024-06-18 21:06:32.052905', 1, 0, '2024-06-18 21:06:12.743292', 0);
 
 -- --------------------------------------------------------
 
@@ -340,6 +346,14 @@ CREATE TABLE `mascotas` (
   `id_tiposangremascota` int(11) DEFAULT NULL,
   `id_dueño` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `mascotas`
+--
+
+INSERT INTO `mascotas` (`id`, `id_tipomascota`, `id_tiporaza`, `foto`, `genero`, `condicion_saludmascota`, `nombre_mascota`, `comportamiento_mascota`, `historia_mascota`, `peso_mascota`, `id_colormascota`, `altura_mascota`, `fecha_nacimientomascota`, `id_tiposangremascota`, `id_dueño`) VALUES
+(1, 1, 1, 'fotos_mascotas/descarga.jfif', 'macho', 'Saludable', 'Lucas', 'Activo y Jugueton', 'Rescatado', '3kl', 5, '50cm', '2022-02-18', 1, NULL),
+(2, 1, 6, 'fotos_mascotas/descarga_1.jfif', 'hembra', 'Saludable', 'Lulu', 'Tranquilo', 'Rescatado de un refugio', '2kl', 1, '30cm', '2023-11-15', 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -568,6 +582,13 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `info_usuario_id`, `id_tipodocumento`, `numero_documento`, `nombres`, `apellidos`, `edad`, `telefono`, `id_tipogenero`, `antecedentes`, `direccion`, `id_rol`) VALUES
+(13, 14, NULL, NULL, 'Usuario', 'Prueba', NULL, 2147483647, NULL, NULL, NULL, NULL);
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -743,7 +764,7 @@ ALTER TABLE `auth_group_permissions`
 -- AUTO_INCREMENT de la tabla `auth_permission`
 --
 ALTER TABLE `auth_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT de la tabla `auth_user`
@@ -773,7 +794,7 @@ ALTER TABLE `django_admin_log`
 -- AUTO_INCREMENT de la tabla `django_content_type`
 --
 ALTER TABLE `django_content_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `django_migrations`
@@ -785,13 +806,13 @@ ALTER TABLE `django_migrations`
 -- AUTO_INCREMENT de la tabla `info_usuarios`
 --
 ALTER TABLE `info_usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `mascotas`
 --
 ALTER TABLE `mascotas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -845,7 +866,7 @@ ALTER TABLE `tipos_sangremascotas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Restricciones para tablas volcadas
