@@ -16,6 +16,9 @@ def inicio(request):
 def adopcion(request):
     return render(request, 'paginas/adopcion.html')
 
+def favoritos(request):
+    return render(request, 'paginas/favoritos.html')
+
 def publicacion(request):
     if request.method == 'POST':
         form = PublicacionMascotaForm(request.POST, request.FILES)
@@ -86,3 +89,22 @@ def detalle_mascota(request, pk):
         'mascota': mascota
     }
     return render(request, 'paginas/detalle_mascota.html', context)
+
+def detalle_mascota(request, pk):
+    mascota = get_object_or_404(Mascotas, pk=pk)
+    
+    if request.method == 'POST':
+        Favoritos.objects.get_or_create(usuario=request.user, mascota=mascota)
+        return redirect('favoritos')  
+        
+    context = {
+        'mascota': mascota
+    }
+    return render(request, 'paginas/detalle_mascota.html', context)
+
+def favoritos(request):
+    favoritos = Favoritos.objects.filter(usuario=request.user)
+    context = {
+        'mascotas_favoritas': favoritos
+    }
+    return render(request, 'paginas/favoritos.html', context)

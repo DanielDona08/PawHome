@@ -1,7 +1,8 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group, Permission
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group, Permission, User
 from django.db import models
 from django.contrib.auth.hashers import check_password, make_password
 from django.utils import timezone
+from django.conf import settings
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -85,10 +86,20 @@ class Mascotas(models.Model):
     id_tiposangremascota = models.ForeignKey('TiposSangremascotas', models.DO_NOTHING, db_column='id_tiposangreMascota', blank=True, null=True)
     id_dueño = models.ForeignKey('Usuarios', models.DO_NOTHING, db_column='id_dueño', blank=True, null=True)
 
-
+    def __str__(self):
+        return self.nombre_mascota
+    
     class Meta:
         managed = False
         db_table = 'mascotas'
+
+class Favoritos(models.Model):
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    mascota = models.ForeignKey(Mascotas, on_delete=models.CASCADE)
+    fecha_agregado = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Favorito de {self.usuario}" - {self.mascota.nombre_mascota}
 
 class Roles(models.Model):
     nombre = models.CharField(max_length=50)
