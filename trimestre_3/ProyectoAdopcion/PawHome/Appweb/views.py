@@ -103,6 +103,7 @@ def detalle_mascota(request, pk):
     }
     return render(request, 'paginas/detalle_mascota.html', context)
 
+@login_required
 def favoritos(request):
     favoritos = Favoritos.objects.filter(usuario=request.user)
     context = {
