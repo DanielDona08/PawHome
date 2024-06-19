@@ -32,8 +32,6 @@ def iniciar_sesion(request):
     return render(request, 'iniciar_sesion.html')
 
 
-def cerrar_sesion(request):
-    return render(request, 'cerrar_sesion.html')
 
 def registrarse(request):
     if request.method == 'POST':
@@ -54,3 +52,7 @@ def registrarse(request):
 
 
 
+def cerrar_sesion(request):
+    logout(request)
+    messages.success(request, '¡Sesión cerrada correctamente!')
+    return redirect('inicio')

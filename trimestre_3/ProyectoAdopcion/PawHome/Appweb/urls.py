@@ -1,5 +1,6 @@
 from django.urls import include, path
 from . import views
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('', views.inicio, name='inicio'),
@@ -10,4 +11,5 @@ urlpatterns = [
     path('mascota/<int:pk>/', views.detalle_mascota, name='detalle_mascota'),
     path('mascota/<int:pk>/favorito/', views.detalle_mascota, name='agregar_favorito'),
     path('favoritos/', views.favoritos, name='favoritos'),
+    
 ]

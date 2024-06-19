@@ -138,3 +138,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 AUTH_USER_MODEL = 'Appweb.InfoUsuarios'
+
+# Redirecciones de autenticación
+LOGIN_URL = 'inicio'
+LOGIN_REDIRECT_URL = 'inicio'
+LOGOUT_REDIRECT_URL = 'inicio'

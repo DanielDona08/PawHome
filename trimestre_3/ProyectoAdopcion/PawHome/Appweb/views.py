@@ -4,12 +4,13 @@ from .forms import BusquedaAvanzadaForm, PublicacionMascotaForm
 from .models import *
 from django.contrib.auth.decorators import login_required
 
+
 def PawHome(request):
     return HttpResponse('Bienvenidos a PawHome')
 
 
 def inicio(request):
-    mascotas = Mascotas.objects.all().order_by('-id')  # Ordenar de más reciente a más antiguo
+    mascotas = Mascotas.objects.all().order_by('-id')  
     context = {'mascotas': mascotas}
     return render(request, 'paginas/inicio.html', context)
 

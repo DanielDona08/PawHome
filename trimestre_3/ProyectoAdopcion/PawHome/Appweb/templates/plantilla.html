@@ -33,30 +33,33 @@
         <nav class="navbar navbar-expand-lg navbar-custom">
             <div class="container">
                 <a class="navbar-brand" href="{% url 'inicio' %}">
-                    <img src="{% static 'media/Imagen2.jfif' %}" alt="PawHome Logo" height="40" class="d-inline-block align-text-top" />
+                    <img src="{% static 'media/Imagen2.jfif' %}" alt="PawHome Logo" height="40" class="d-inline-block align-text-top">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{% url 'publicacion' %}">Dar en adopción</a>
+                            <a class="nav-link" href="{% url 'publicacion' %}">Dar en adopción</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{% url 'favoritos' %}">Tus favoritos</a>
+                            <a class="nav-link" href="{% url 'favoritos' %}">Tus favoritos</a>
                         </li>
                     </ul>
                     <form class="d-flex" role="search" action="{% url 'busqueda_avanzada' %}">
                         <input class="form-control me-2" type="search" placeholder="Búsqueda Avanzada" aria-label="Search" data-bs-toggle="modal" data-bs-target="#busquedaAvanzadaModal">
                     </form>
                     <ul class="navbar-nav ms-3">
-                        <li class="nav-item">
-                            <a class="btn btn-light me-2" href="{% url 'iniciar_sesion' %}">Iniciar sesión</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-primary" href="{% url 'registrarse' %}">Crear cuenta</a>
-                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="btn btn-light me-2" href="{% url 'logout' %}">Cerrar sesión</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="btn btn-light me-2" href="{% url 'iniciar_sesion' %}">Iniciar sesión</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-primary" href="{% url 'registrarse' %}">Crear cuenta</a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
