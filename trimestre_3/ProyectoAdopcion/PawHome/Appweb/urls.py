@@ -12,5 +12,7 @@ urlpatterns = [
     path('mascota/<int:pk>/favorito/', views.detalle_mascota, name='agregar_favorito'),
     path('favoritos/', views.favoritos, name='favoritos'),
     path('eliminar_favorito/<int:favorito_id>/', views.eliminar_favorito, name='eliminar_favorito'),
+    path('completar_datos/', views.completar_datos, name='completar_datos'),
+    path('mi_cuenta/', views.mi_cuenta, name='mi_cuenta'),
     
 ]

@@ -184,3 +184,12 @@ class Usuarios(models.Model):
     class Meta:
         managed = True
         db_table = 'usuarios'
+
+    def falta_completar_datos(self):
+        # Define los campos críticos que deben estar completos
+        campos_criticos = ['nombres', 'apellidos', 'edad', 'telefono', 'direccion']
+        for campo in campos_criticos:
+            valor_campo = getattr(self, campo)
+            if not valor_campo:
+                return True
+        return False

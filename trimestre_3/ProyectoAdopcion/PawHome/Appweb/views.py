@@ -1,6 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import BusquedaAvanzadaForm, PublicacionMascotaForm
+from .forms import BusquedaAvanzadaForm, PublicacionMascotaForm, CompletarDatosForm
 from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -20,6 +20,13 @@ def adopcion(request):
 
 def favoritos(request):
     return render(request, 'paginas/favoritos.html')
+
+def mi_cuenta(request):
+    user = Usuarios.objects.get(info_usuario=request.user)
+    context = {
+        'user': user
+    }
+    return render(request, 'paginas/mi_cuenta.html', context)
 
 @login_required
 def publicacion(request):
@@ -118,3 +125,27 @@ def eliminar_favorito(request, favorito_id):
     favorito = get_object_or_404(Favoritos, id=favorito_id, usuario=request.user)
     favorito.delete()
     return redirect('favoritos')
+
+
+@login_required
+def completar_datos(request):
+    usuario_info = request.user
+    try:
+        usuario = Usuarios.objects.get(info_usuario=usuario_info)
+    except Usuarios.DoesNotExist:
+        usuario = None
+
+    if request.method == 'POST':
+        form = CompletarDatosForm(request.POST, instance=usuario)
+        if form.is_valid():
+            datos_usuario = form.save(commit=False)
+            datos_usuario.info_usuario = usuario_info
+            datos_usuario.save()
+            return redirect('mi_cuenta')
+    else:
+        form = CompletarDatosForm(instance=usuario)
+
+    contexto = {
+        'form': form
+    }
+    return render(request, 'paginas/completar_datos.html', contexto)

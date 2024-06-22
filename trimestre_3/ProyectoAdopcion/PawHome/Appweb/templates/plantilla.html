@@ -55,6 +55,9 @@
                             <li class="nav-item">
                                 <a class="btn btn-light me-2" href="{% url 'logout' %}">Cerrar sesión</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="btn btn-light me-2" href="{% url 'mi_cuenta' %}">Mi cuenta</a>
+                            </li>
                         {% else %}
                             <li class="nav-item">
                                 <a class="btn btn-light me-2" href="{% url 'iniciar_sesion' %}?next={% url 'publicacion' %}">Iniciar sesión</a>
