@@ -14,7 +14,9 @@ class PublicacionMascotaForm(forms.ModelForm):
         fields = '__all__'
         
 class CompletarDatosForm(forms.ModelForm):
+    id_tipodocumento = forms.ModelChoiceField(queryset=TiposDocumentos.objects.all(), label='Tipo de documento')
+    id_tipogenero = forms.ModelChoiceField(queryset=TiposGenero.objects.all(), label='Género')
+
     class Meta:
         model = Usuarios
-        fields = ['id_tipodocumento', 'numero_documento', 'nombres', 'apellidos', 'edad', 'telefono', 'id_tipogenero', 'antecedentes', 'direccion']
-
+        fields = ['id_tipodocumento', 'numero_documento', 'edad', 'id_tipogenero', 'antecedentes', 'direccion']
