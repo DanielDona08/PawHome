@@ -130,6 +130,9 @@ class TiposDocumentos(models.Model):
     abreviacion = models.CharField(max_length=3, blank=True, null=True)
     descripcion = models.CharField(max_length=50, blank=True, null=True)
 
+    def __str__(self):
+        return self.descripcion
+
     class Meta:
         managed = False
         db_table = 'tipos_documentos'
@@ -137,6 +140,9 @@ class TiposDocumentos(models.Model):
 class TiposGenero(models.Model):
     abreviacion = models.CharField(max_length=3, blank=True, null=True)
     descripcion = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return self.descripcion
 
     class Meta:
         managed = False
