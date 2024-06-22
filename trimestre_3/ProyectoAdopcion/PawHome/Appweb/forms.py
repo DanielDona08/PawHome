@@ -12,3 +12,9 @@ class PublicacionMascotaForm(forms.ModelForm):
     class Meta:
         model = Mascotas
         fields = '__all__'
+        
+class CompletarDatosForm(forms.ModelForm):
+    class Meta:
+        model = Usuarios
+        fields = ['id_tipodocumento', 'numero_documento', 'nombres', 'apellidos', 'edad', 'telefono', 'id_tipogenero', 'antecedentes', 'direccion']
+

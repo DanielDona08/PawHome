@@ -1,0 +1,32 @@
+<div class="container">
+    <h2 class="mt-4 mb-4">Completar datos de usuario</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_id_tipodocumento" class="form-label">Tipo de documento</label>
+            {{ form.id_tipodocumento }}
+        </div>
+        <div class="mb-3">
+            <label for="id_numero_documento" class="form-label">Número de documento</label>
+            {{ form.numero_documento }}
+        </div>
+        <div class="mb-3">
+            <label for="id_edad" class="form-label">Edad</label>
+            {{ form.edad }}
+        </div>
+        <div class="mb-3">
+            <label for="id_id_tipogenero" class="form-label">Género</label>
+            {{ form.id_tipogenero }}
+        </div>
+        <div class="mb-3">
+            <label for="id_antecedentes" class="form-label">Antecedentes</label>
+            {{ form.antecedentes }}
+        </div>
+        <div class="mb-3">
+            <label for="id_direccion" class="form-label">Dirección</label>
+            {{ form.direccion }}
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{% url 'inicio' %}" class="btn btn-secondary ms-2">Hacerlo luego</a>
+    </form>
+</div>

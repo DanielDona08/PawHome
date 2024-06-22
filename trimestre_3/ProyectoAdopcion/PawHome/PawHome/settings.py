@@ -141,5 +141,5 @@ AUTH_USER_MODEL = 'Appweb.InfoUsuarios'
 
 # Redirecciones de autenticación
 LOGIN_URL = 'iniciar_sesion'
-LOGIN_REDIRECT_URL = 'inicio'
+LOGIN_REDIRECT_URL = 'completar_datos_usuario'
 LOGOUT_REDIRECT_URL = 'inicio'

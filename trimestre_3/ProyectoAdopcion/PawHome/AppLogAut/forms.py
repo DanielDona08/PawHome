@@ -1,7 +1,6 @@
 from django import forms
-from django.contrib.auth.hashers import make_password  # Importar make_password
-
-from .models import InfoUsuarios
+from django.contrib.auth.hashers import make_password 
+from .models import InfoUsuarios, Usuarios
 
 class RegistroForm(forms.ModelForm):
     nombres = forms.CharField(label='Nombres', max_length=60)
@@ -19,6 +18,8 @@ class RegistroForm(forms.ModelForm):
         if commit:
             usuario_info.save()
         return usuario_info
+
+
 
 
         
