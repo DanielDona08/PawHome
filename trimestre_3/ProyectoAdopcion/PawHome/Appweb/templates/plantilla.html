@@ -1,4 +1,3 @@
-
 {% load static %}
 <!doctype html>
 <html lang="es">
@@ -58,7 +57,7 @@
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a class="btn btn-light me-2" href="{% url 'iniciar_sesion' %}">Iniciar sesión</a>
+                                <a class="btn btn-light me-2" href="{% url 'iniciar_sesion' %}?next={% url 'publicacion' %}">Iniciar sesión</a>
                             </li>
                             <li class="nav-item">
                                 <a class="btn btn-primary" href="{% url 'registrarse' %}">Crear cuenta</a>

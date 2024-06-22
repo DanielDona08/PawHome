@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BusquedaAvanzadaForm, PublicacionMascotaForm
 from .models import *
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def PawHome(request):
@@ -20,6 +21,7 @@ def adopcion(request):
 def favoritos(request):
     return render(request, 'paginas/favoritos.html')
 
+@login_required
 def publicacion(request):
     if request.method == 'POST':
         form = PublicacionMascotaForm(request.POST, request.FILES)
@@ -86,18 +88,19 @@ def obtener_razas_mascota(request):
 
 def detalle_mascota(request, pk):
     mascota = get_object_or_404(Mascotas, pk=pk)
-    context = {
-        'mascota': mascota
-    }
-    return render(request, 'paginas/detalle_mascota.html', context)
-
-def detalle_mascota(request, pk):
-    mascota = get_object_or_404(Mascotas, pk=pk)
     
     if request.method == 'POST':
-        Favoritos.objects.get_or_create(usuario=request.user, mascota=mascota)
-        return redirect('favoritos')  
+        if not request.user.is_authenticated:
+            messages.info(request, 'Debes iniciar sesión para añadir a favoritos.')
+            return redirect('login')  
         
+        favorito, created = Favoritos.objects.get_or_create(usuario=request.user, mascota=mascota)
+        if created:
+            messages.success(request, f'{mascota.nombre_mascota} ha sido añadida a tus favoritos.')
+        else:
+            messages.info(request, f'{mascota.nombre_mascota} ya está en tus favoritos.')
+        return redirect('favoritos')  
+    
     context = {
         'mascota': mascota
     }
@@ -110,3 +113,8 @@ def favoritos(request):
         'mascotas_favoritas': favoritos
     }
     return render(request, 'paginas/favoritos.html', context)
+
+def eliminar_favorito(request, favorito_id):
+    favorito = get_object_or_404(Favoritos, id=favorito_id, usuario=request.user)
+    favorito.delete()
+    return redirect('favoritos')
