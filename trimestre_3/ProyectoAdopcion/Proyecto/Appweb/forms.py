@@ -1,5 +1,5 @@
 from django import forms
-from .models import *
+from .models import TiposDocumentos, TiposGenero, TiposMascotas, TiposRazasmascotas, TiposColormascotas, Mascotas, Usuarios
 
 class BusquedaAvanzadaForm(forms.Form):
     tipo_mascota = forms.ModelChoiceField(queryset=TiposMascotas.objects.all(), empty_label=None)

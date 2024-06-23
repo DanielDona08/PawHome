@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'AppLogAut',
     'Appweb',
+    'Core',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -137,7 +138,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-AUTH_USER_MODEL = 'models.InfoUsuarios'
+AUTH_USER_MODEL = 'Core.InfoUsuarios'
 
 # Redirecciones de autenticación
 LOGIN_URL = 'iniciar_sesion'

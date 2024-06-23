@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BusquedaAvanzadaForm, PublicacionMascotaForm, CompletarDatosForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import *
+from .models import Mascotas, Usuarios, TiposMascotas, TiposRazasmascotas, TiposColormascotas, TiposSangremascotas, Favoritos
 
 
 

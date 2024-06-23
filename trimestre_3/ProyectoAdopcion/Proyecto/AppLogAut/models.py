@@ -1,2 +1,2 @@
 from django.db import models
-from PawHome.models import *
+from Core.models import InfoUsuarios, Usuarios, Mascotas

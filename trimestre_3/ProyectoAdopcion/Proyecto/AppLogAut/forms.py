@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.hashers import make_password 
-from .models import *
+from .models import InfoUsuarios
 
 class RegistroForm(forms.ModelForm):
     nombres = forms.CharField(label='Nombres', max_length=60)
