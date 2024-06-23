@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Adopción de Mascotas</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'media/huella.ico' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Formulario de Adopción de Mascotas</h2>
+        <form>
+            <!-- Información del adoptante -->
+            <div class="form-group">
+                <label for="nombre">Nombre completo</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre completo" required>
+            </div>
+            <div class="form-group">
+                <label for="edad">Edad</label>
+                <input type="number" class="form-control" id="edad" placeholder="Ingresa tu edad" required>
+            </div>
+            <div class="form-group">
+                <label for="tipoDocumento">Tipo de documento</label>
+                <select class="form-control" id="tipoDocumento" required>
+                    <option value="CC">Cédula de Ciudadanía</option>
+                    <option value="CE">Cédula de Extranjería</option>
+                    <option value="PP">Pasaporte</option>
+                    <option value="RCN">Registro Civil de Nacimiento</option>
+                    <option value="TRE">Tarjeta de Registro de Extranjería</option>
+                    <option value="DNI">Documento Nacional de Identidad</option>
+                    <option value="PRP">Permiso de Residencia Permanente</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="numeroDocumento">Número de documento</label>
+                <input type="text" class="form-control" id="numeroDocumento" placeholder="Ingresa tu número de documento" required>
+            </div>
+            <div class="form-group">
+                <label for="genero">Género</label>
+                <select class="form-control" id="genero" required>
+                    <option value="hombre">Hombre</option>
+                    <option value="mujer">Mujer</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input type="tel" class="form-control" id="telefono" placeholder="Ingresa tu teléfono" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Correo electrónico</label>
+                <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required>
+            </div>
+            <div class="form-group">
+                <label for="antecedentes">Historial de mascotas</label>
+                <textarea class="form-control" id="antecedentes" rows="3" placeholder="¿Ha tenido o tiene mascotas viviendo con usted actualmente?" required></textarea>
+            </div>
+
+            
+           
+    
+
+            
+            <div class="form-group">
+                <label for="motivo">Motivo de la adopción</label>
+                <textarea class="form-control" id="motivo" rows="3" placeholder="Explica el motivo por el cual deseas tener una mascota" required></textarea>
+            </div>
+
+            
+            <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
