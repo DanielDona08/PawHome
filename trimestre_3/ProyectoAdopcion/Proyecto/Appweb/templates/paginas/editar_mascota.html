@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Mascota</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'media/huella.ico' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Editar Mascota</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="nombre_mascota">Nombre de la mascota</label>
+                <input type="text" class="form-control" id="nombre_mascota" name="nombre_mascota" value="{{ form.nombre_mascota.value }}" required>
+            </div>
+            <div class="form-group">
+                <label for="id_tipomascota">Tipo de mascota</label>
+                <select class="form-control" id="id_tipomascota" name="id_tipomascota" required>
+                    {% for tipo in form.id_tipomascota.field.queryset %}
+                        <option value="{{ tipo.id }}" {% if tipo.id == form.id_tipomascota.value %}selected{% endif %}>{{ tipo.descripcion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="id_tiporaza">Raza de la mascota</label>
+                <select class="form-control" id="id_tiporaza" name="id_tiporaza" required>
+                    {% for raza in form.id_tiporaza.field.queryset %}
+                        <option value="{{ raza.id }}" {% if raza.id == form.id_tiporaza.value %}selected{% endif %}>{{ raza.descripcion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="genero">Género</label>
+                <select class="form-control" id="genero" name="genero" required>
+                    <option value="macho" {% if form.genero.value == "macho" %}selected{% endif %}>Macho</option>
+                    <option value="hembra" {% if form.genero.value == "hembra" %}selected{% endif %}>Hembra</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="peso_mascota">Peso de la mascota</label>
+                <input type="text" class="form-control" id="peso_mascota" name="peso_mascota" value="{{ form.peso_mascota.value }}" required>
+            </div>
+            <div class="form-group">
+                <label for="id_colormascota">Color de la mascota</label>
+                <select class="form-control" id="id_colormascota" name="id_colormascota" required>
+                    {% for color in form.id_colormascota.field.queryset %}
+                        <option value="{{ color.id }}" {% if color.id == form.id_colormascota.value %}selected{% endif %}>{{ color.descripcion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="altura_mascota">Altura de la mascota</label>
+                <input type="text" class="form-control" id="altura_mascota" name="altura_mascota" value="{{ form.altura_mascota.value }}" required>
+            </div>
+            <div class="form-group">
+                <label for="fecha_nacimientomascota">Fecha de nacimiento de la mascota</label>
+                <input type="date" class="form-control" id="fecha_nacimientomascota" name="fecha_nacimientomascota" value="{{ form.fecha_nacimientomascota.value }}" required>
+            </div>
+            <div class="form-group">
+                <label for="id_tiposangremascota">Tipo de sangre de la mascota</label>
+                <select class="form-control" id="id_tiposangremascota" name="id_tiposangremascota" required>
+                    {% for sangre in form.id_tiposangremascota.field.queryset %}
+                        <option value="{{ sangre.id }}" {% if sangre.id == form.id_tiposangremascota.value %}selected{% endif %}>{{ sangre.descripcion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="condicion_saludmascota">Condición de salud de la mascota</label>
+                <input type="text" class="form-control" id="condicion_saludmascota" name="condicion_saludmascota" value="{{ form.condicion_saludmascota.value }}" required>
+            </div>
+            <div class="form-group">
+                <label for="comportamiento_mascota">Comportamiento de la mascota</label>
+                <input type="text" class="form-control" id="comportamiento_mascota" name="comportamiento_mascota" value="{{ form.comportamiento_mascota.value }}" required>
+            </div>
+            <div class="form-group">
+                <label for="historia_mascota">Historia de la mascota</label>
+                <input type="text" class="form-control" id="historia_mascota" name="historia_mascota" value="{{ form.historia_mascota.value }}" required>
+            </div>
+            <div class="form-group">
+                <label for="foto">Foto de la mascota</label>
+                <input type="file" class="form-control-file" id="foto" name="foto" value="{{ form.foto.value }}" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block">Guardar cambios</button>
+            <a href="{% url 'detalle_mascota' mascota.id %}" class="btn btn-secondary btn-block">Cancelar</a>
+        </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

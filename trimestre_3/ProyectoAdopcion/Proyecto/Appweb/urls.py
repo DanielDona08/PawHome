@@ -15,5 +15,7 @@ urlpatterns = [
     path('completar_datos/', views.completar_datos, name='completar_datos'),
     path('mi_cuenta/', views.mi_cuenta, name='mi_cuenta'),
     path('dueño/<int:usuario_id>/', views.detalle_dueño, name='detalle_dueño'),
-    
+    path('mascota/<int:pk>/editar/', views.editar_mascota, name='editar_mascota'),
+    path('mascota/<int:pk>/borrar/', views.borrar_mascota, name='borrar_mascota'),
+    path('confirmacion_adopcion/', views.confirmacion_adopcion, name='confirmacion_adopcion'),
 ]
