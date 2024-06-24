@@ -1,6 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import BusquedaAvanzadaForm, PublicacionMascotaForm, CompletarDatosForm
+from .forms import BusquedaAvanzadaForm, PublicacionMascotaForm, CompletarDatosForm, MascotaForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Mascotas, Usuarios, TiposMascotas, TiposRazasmascotas, TiposColormascotas, TiposSangremascotas, Favoritos, InfoUsuarios
@@ -9,6 +9,9 @@ from .models import Mascotas, Usuarios, TiposMascotas, TiposRazasmascotas, Tipos
 
 def PawHome(request):
     return HttpResponse('Bienvenidos a PawHome')
+
+def confirmacion_adopcion(request):
+    return render(request, 'paginas/confirmacion_adopcion.html')
 
 
 def inicio(request):
@@ -102,23 +105,26 @@ def obtener_razas_mascota(request):
 
 def detalle_mascota(request, pk):
     mascota = get_object_or_404(Mascotas, pk=pk)
-    dueño = mascota.dueños.first()
-    
+    dueños = mascota.dueños.all()
+
+    es_dueño = request.user.is_authenticated and dueños.filter(pk=request.user.pk).exists()
+
     if request.method == 'POST':
         if not request.user.is_authenticated:
             messages.info(request, 'Debes iniciar sesión para añadir a favoritos.')
-            return redirect('login')  
-        
+            return redirect('login')
+
         favorito, created = Favoritos.objects.get_or_create(usuario=request.user, mascota=mascota)
         if created:
             messages.success(request, f'{mascota.nombre_mascota} ha sido añadida a tus favoritos.')
         else:
             messages.info(request, f'{mascota.nombre_mascota} ya está en tus favoritos.')
-        return redirect('favoritos')  
-    
+        return redirect('favoritos')
+
     context = {
         'mascota': mascota,
-        'dueño': dueño
+        'dueños': dueños,
+        'es_dueño': es_dueño,
     }
     return render(request, 'paginas/detalle_mascota.html', context)
 
@@ -163,4 +169,39 @@ def completar_datos(request):
 def detalle_dueño(request, usuario_id):
     usuario = get_object_or_404(InfoUsuarios, id=usuario_id)
     return render(request, 'paginas/detalle_dueño.html', {'usuario': usuario})
+
+
+@login_required
+def editar_mascota(request, pk):
+    mascota = get_object_or_404(Mascotas, pk=pk)
+
+    if request.user not in mascota.dueños.all():
+        messages.error(request, 'No tienes permiso para editar esta mascota.')
+        return redirect('detalle_mascota', pk=pk)
+
+    if request.method == 'POST':
+        form = MascotaForm(request.POST, request.FILES, instance=mascota)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Mascota actualizada correctamente.')
+            return redirect('detalle_mascota', pk=pk)
+    else:
+        form = MascotaForm(instance=mascota)
+
+    return render(request, 'paginas/editar_mascota.html', {'form': form, 'mascota': mascota})
+
+@login_required
+def borrar_mascota(request, pk):
+    mascota = get_object_or_404(Mascotas, pk=pk)
+
+    if request.user not in mascota.dueños.all():
+        messages.error(request, 'No tienes permiso para borrar esta mascota.')
+        return redirect('detalle_mascota', pk=pk)
+
+    if request.method == 'POST':
+        mascota.delete()
+        messages.success(request, 'Mascota borrada correctamente.')
+        return redirect('inicio')
+
+    return render(request, 'paginas/borrar_mascota.html', {'mascota': mascota})
 

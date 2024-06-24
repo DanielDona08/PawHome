@@ -211,3 +211,19 @@ class Sesiones(models.Model):
     class Meta:
         managed = False
         db_table = 'sesiones'
+
+
+class Adopcion(models.Model):
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=100)
+    edad = models.IntegerField()
+    tipoDocumento = models.CharField(max_length=3)
+    numeroDocumento = models.CharField(max_length=20)
+    genero = models.CharField(max_length=10)
+    telefono = models.CharField(max_length=15)
+    email = models.EmailField()
+    antecedentes = models.TextField()
+    motivo = models.TextField()
+
+    def __str__(self):
+        return f"Adopción de {self.nombre} por {self.usuario.username}"
