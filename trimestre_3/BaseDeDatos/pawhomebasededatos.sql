@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-06-2024 a las 20:48:31
+-- Tiempo de generación: 24-06-2024 a las 20:07:00
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,27 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `pawhome`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `appweb_favoritos`
---
-
-CREATE TABLE `appweb_favoritos` (
-  `id` int(11) NOT NULL,
-  `usuario_id` int(11) NOT NULL,
-  `mascota_id` int(11) NOT NULL,
-  `fecha_agregado` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `appweb_favoritos`
---
-
-INSERT INTO `appweb_favoritos` (`id`, `usuario_id`, `mascota_id`, `fecha_agregado`) VALUES
-(1, 14, 1, '2024-06-19 18:47:36'),
-(2, 14, 2, '2024-06-19 18:47:41');
 
 -- --------------------------------------------------------
 
@@ -154,7 +133,55 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (69, 'Can add favoritos', 18, 'add_favoritos'),
 (70, 'Can change favoritos', 18, 'change_favoritos'),
 (71, 'Can delete favoritos', 18, 'delete_favoritos'),
-(72, 'Can view favoritos', 18, 'view_favoritos');
+(72, 'Can view favoritos', 18, 'view_favoritos'),
+(73, 'Can add mascotas', 19, 'add_mascotas'),
+(74, 'Can change mascotas', 19, 'change_mascotas'),
+(75, 'Can delete mascotas', 19, 'delete_mascotas'),
+(76, 'Can view mascotas', 19, 'view_mascotas'),
+(77, 'Can add roles', 20, 'add_roles'),
+(78, 'Can change roles', 20, 'change_roles'),
+(79, 'Can delete roles', 20, 'delete_roles'),
+(80, 'Can view roles', 20, 'view_roles'),
+(81, 'Can add sesiones', 21, 'add_sesiones'),
+(82, 'Can change sesiones', 21, 'change_sesiones'),
+(83, 'Can delete sesiones', 21, 'delete_sesiones'),
+(84, 'Can view sesiones', 21, 'view_sesiones'),
+(85, 'Can add tipos colormascotas', 22, 'add_tiposcolormascotas'),
+(86, 'Can change tipos colormascotas', 22, 'change_tiposcolormascotas'),
+(87, 'Can delete tipos colormascotas', 22, 'delete_tiposcolormascotas'),
+(88, 'Can view tipos colormascotas', 22, 'view_tiposcolormascotas'),
+(89, 'Can add tipos documentos', 23, 'add_tiposdocumentos'),
+(90, 'Can change tipos documentos', 23, 'change_tiposdocumentos'),
+(91, 'Can delete tipos documentos', 23, 'delete_tiposdocumentos'),
+(92, 'Can view tipos documentos', 23, 'view_tiposdocumentos'),
+(93, 'Can add tipos genero', 24, 'add_tiposgenero'),
+(94, 'Can change tipos genero', 24, 'change_tiposgenero'),
+(95, 'Can delete tipos genero', 24, 'delete_tiposgenero'),
+(96, 'Can view tipos genero', 24, 'view_tiposgenero'),
+(97, 'Can add tipos mascotas', 25, 'add_tiposmascotas'),
+(98, 'Can change tipos mascotas', 25, 'change_tiposmascotas'),
+(99, 'Can delete tipos mascotas', 25, 'delete_tiposmascotas'),
+(100, 'Can view tipos mascotas', 25, 'view_tiposmascotas'),
+(101, 'Can add tipos razasmascotas', 26, 'add_tiposrazasmascotas'),
+(102, 'Can change tipos razasmascotas', 26, 'change_tiposrazasmascotas'),
+(103, 'Can delete tipos razasmascotas', 26, 'delete_tiposrazasmascotas'),
+(104, 'Can view tipos razasmascotas', 26, 'view_tiposrazasmascotas'),
+(105, 'Can add tipos sangremascotas', 27, 'add_tipossangremascotas'),
+(106, 'Can change tipos sangremascotas', 27, 'change_tipossangremascotas'),
+(107, 'Can delete tipos sangremascotas', 27, 'delete_tipossangremascotas'),
+(108, 'Can view tipos sangremascotas', 27, 'view_tipossangremascotas'),
+(109, 'Can add info usuarios', 28, 'add_infousuarios'),
+(110, 'Can change info usuarios', 28, 'change_infousuarios'),
+(111, 'Can delete info usuarios', 28, 'delete_infousuarios'),
+(112, 'Can view info usuarios', 28, 'view_infousuarios'),
+(113, 'Can add favoritos', 29, 'add_favoritos'),
+(114, 'Can change favoritos', 29, 'change_favoritos'),
+(115, 'Can delete favoritos', 29, 'delete_favoritos'),
+(116, 'Can view favoritos', 29, 'view_favoritos'),
+(117, 'Can add usuarios', 30, 'add_usuarios'),
+(118, 'Can change usuarios', 30, 'change_usuarios'),
+(119, 'Can delete usuarios', 30, 'delete_usuarios'),
+(120, 'Can view usuarios', 30, 'view_usuarios');
 
 -- --------------------------------------------------------
 
@@ -258,6 +285,18 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (2, 'auth', 'permission'),
 (4, 'auth', 'user'),
 (5, 'contenttypes', 'contenttype'),
+(29, 'Core', 'favoritos'),
+(28, 'Core', 'infousuarios'),
+(19, 'Core', 'mascotas'),
+(20, 'Core', 'roles'),
+(21, 'Core', 'sesiones'),
+(22, 'Core', 'tiposcolormascotas'),
+(23, 'Core', 'tiposdocumentos'),
+(24, 'Core', 'tiposgenero'),
+(25, 'Core', 'tiposmascotas'),
+(26, 'Core', 'tiposrazasmascotas'),
+(27, 'Core', 'tipossangremascotas'),
+(30, 'Core', 'usuarios'),
 (6, 'sessions', 'session');
 
 -- --------------------------------------------------------
@@ -278,27 +317,28 @@ CREATE TABLE `django_migrations` (
 --
 
 INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
-(1, 'contenttypes', '0001_initial', '2024-06-07 17:28:23.112799'),
-(2, 'auth', '0001_initial', '2024-06-07 17:28:24.017446'),
-(3, 'admin', '0001_initial', '2024-06-07 17:28:24.233317'),
-(4, 'admin', '0002_logentry_remove_auto_add', '2024-06-07 17:28:24.250118'),
-(5, 'admin', '0003_logentry_add_action_flag_choices', '2024-06-07 17:28:24.305245'),
-(6, 'contenttypes', '0002_remove_content_type_name', '2024-06-07 17:28:24.422827'),
-(7, 'auth', '0002_alter_permission_name_max_length', '2024-06-07 17:28:24.534332'),
-(8, 'auth', '0003_alter_user_email_max_length', '2024-06-07 17:28:24.557094'),
-(9, 'auth', '0004_alter_user_username_opts', '2024-06-07 17:28:24.573537'),
-(10, 'auth', '0005_alter_user_last_login_null', '2024-06-07 17:28:24.787762'),
-(11, 'auth', '0006_require_contenttypes_0002', '2024-06-07 17:28:24.801944'),
-(12, 'auth', '0007_alter_validators_add_error_messages', '2024-06-07 17:28:24.817575'),
-(13, 'auth', '0008_alter_user_username_max_length', '2024-06-07 17:28:24.841620'),
-(14, 'auth', '0009_alter_user_last_name_max_length', '2024-06-07 17:28:24.852012'),
-(15, 'auth', '0010_alter_group_name_max_length', '2024-06-07 17:28:24.887761'),
-(16, 'auth', '0011_update_proxy_permissions', '2024-06-07 17:28:24.905006'),
-(17, 'auth', '0012_alter_user_first_name_max_length', '2024-06-07 17:28:24.938620'),
-(18, 'sessions', '0001_initial', '2024-06-07 17:28:25.002750'),
-(19, 'Appweb', '0001_initial', '2024-06-07 18:10:31.663803'),
-(20, 'Appweb', '0002_infousuarios_last_login', '2024-06-07 18:48:34.749495'),
-(21, 'Appweb', '0003_infousuarios_is_active_infousuarios_is_staff', '2024-06-10 22:13:09.271764');
+(22, 'contenttypes', '0001_initial', '2024-06-23 22:38:57.552380'),
+(23, 'contenttypes', '0002_remove_content_type_name', '2024-06-23 22:38:57.556379'),
+(24, 'auth', '0001_initial', '2024-06-23 22:38:57.560378'),
+(25, 'auth', '0002_alter_permission_name_max_length', '2024-06-23 22:38:57.567380'),
+(26, 'auth', '0003_alter_user_email_max_length', '2024-06-23 22:38:57.576382'),
+(27, 'auth', '0004_alter_user_username_opts', '2024-06-23 22:38:57.580380'),
+(28, 'auth', '0005_alter_user_last_login_null', '2024-06-23 22:38:57.584381'),
+(29, 'auth', '0006_require_contenttypes_0002', '2024-06-23 22:38:57.588382'),
+(30, 'auth', '0007_alter_validators_add_error_messages', '2024-06-23 22:38:57.592384'),
+(31, 'auth', '0008_alter_user_username_max_length', '2024-06-23 22:38:57.599383'),
+(32, 'auth', '0009_alter_user_last_name_max_length', '2024-06-23 22:38:57.605383'),
+(33, 'auth', '0010_alter_group_name_max_length', '2024-06-23 22:38:57.611384'),
+(34, 'auth', '0011_update_proxy_permissions', '2024-06-23 22:38:57.617385'),
+(35, 'auth', '0012_alter_user_first_name_max_length', '2024-06-23 22:38:57.623387'),
+(36, 'Core', '0001_initial', '2024-06-23 22:38:57.628386'),
+(37, 'admin', '0001_initial', '2024-06-23 22:43:48.455864'),
+(38, 'admin', '0002_logentry_remove_auto_add', '2024-06-23 22:44:19.687617'),
+(39, 'admin', '0003_logentry_add_action_flag_choices', '2024-06-23 22:44:42.005001'),
+(40, 'sessions', '0001_initial', '2024-06-23 22:45:46.947429'),
+(41, 'Core', '0002_alter_mascotas_options_infousuarios_mascotas', '2024-06-24 15:40:40.959984'),
+(42, 'Core', '0003_mascotas_id_colormascota_mascotas_id_tipomascota_and_more', '2024-06-24 15:42:01.734355'),
+(43, 'Core', '0004_adopcion', '2024-06-24 15:53:05.419714');
 
 -- --------------------------------------------------------
 
@@ -318,6 +358,7 @@ CREATE TABLE `django_session` (
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 ('3rcwf3vykjgztn4ucdx0b3ulm78n46tz', '.eJxVjEsOwjAMBe-SNYrSxEljlux7hsp2DS2gROpnhbg7VOoCtm9m3sv0tK1jvy0699NgzqYBc_odmeShZSfDncqtWqllnSe2u2IPutiuDvq8HO7fwUjL-K1D0uxFXEQRQs_ArAmjYObGA2jGVnIKwtFh4NbF4Ag0KSXweCVn3h8Iuzfd:1sK0FD:IB-RDd8YO7NStA5-uwHzIFBEjfm2g0sWbTk2ns14YmI', '2024-07-03 18:41:19.329299'),
+('ceh6tm44s6p8vv8tkg6ncndckuzewv5v', '.eJxVjEsOwjAMBe-SNYrSxEljlux7hsp2DS2gROpnhbg7VOoCtm9m3sv0tK1jvy0699NgzqYBc_odmeShZSfDncqtWqllnSe2u2IPutiuDvq8HO7fwUjL-K1D0uxFXEQRQs_ArAmjYObGA2jGVnIKwtFh4NbF4Ag0KSXweCVn3h8Iuzfd:1sLl9J:2gzRtwp7dbZPaT4UiCJM8mMceRDXl8fo7yb6zjyobfw', '2024-07-08 14:58:29.389011'),
 ('hcx7cjpxpnzvlfiqe33dcpiy38ynfv8t', '.eJxVjEsOwjAMBe-SNYrSxEljlux7hsp2DS2gROpnhbg7VOoCtm9m3sv0tK1jvy0699NgzqYBc_odmeShZSfDncqtWqllnSe2u2IPutiuDvq8HO7fwUjL-K1D0uxFXEQRQs_ArAmjYObGA2jGVnIKwtFh4NbF4Ag0KSXweCVn3h8Iuzfd:1sJg2C:MswZPnbWlSTBU-oUv5v8h2zdVqpmJ0rgUWgtizLPa5E', '2024-07-02 21:06:32.057700');
 
 -- --------------------------------------------------------
@@ -343,7 +384,8 @@ CREATE TABLE `info_usuarios` (
 
 INSERT INTO `info_usuarios` (`id`, `email`, `password`, `last_login`, `is_active`, `is_staff`, `date_joined`, `is_superuser`) VALUES
 (13, 'admin@gmail.com', 'pbkdf2_sha256$720000$9scF9IxEJ4JYRTRfJNr73s$asK+v/R0RaGCb6An4BQF/kJz1WGXJmVOqWeXfAPg+GE=', '2024-06-10 22:46:27.933262', 1, 1, '2024-06-10 22:44:10.043363', 1),
-(14, 'prueba@gmail.com', 'pbkdf2_sha256$720000$qYNFGYsStswNzoZ5rWjhH3$bXjpt4qCVtVblJ3nn/GY5SGaXCtWrPeFLGEWgYM6YU8=', '2024-06-19 18:41:19.327249', 1, 0, '2024-06-18 21:06:12.743292', 0);
+(14, 'prueba@gmail.com', 'pbkdf2_sha256$720000$qYNFGYsStswNzoZ5rWjhH3$bXjpt4qCVtVblJ3nn/GY5SGaXCtWrPeFLGEWgYM6YU8=', '2024-06-24 14:58:29.368998', 1, 0, '2024-06-18 21:06:12.743292', 0),
+(15, 'crearpubli@gmail.com', 'pbkdf2_sha256$720000$C8JaF0JCHRpJ0L8ede0yvo$1vYAZR1kfnt14z/NUgnzeTcOaKanG1yHRgbzDtmhcBE=', '2024-06-24 04:38:32.667484', 1, 0, '2024-06-24 04:37:21.691406', 0);
 
 -- --------------------------------------------------------
 
@@ -374,8 +416,8 @@ CREATE TABLE `mascotas` (
 --
 
 INSERT INTO `mascotas` (`id`, `id_tipomascota`, `id_tiporaza`, `foto`, `genero`, `condicion_saludmascota`, `nombre_mascota`, `comportamiento_mascota`, `historia_mascota`, `peso_mascota`, `id_colormascota`, `altura_mascota`, `fecha_nacimientomascota`, `id_tiposangremascota`, `id_dueño`) VALUES
-(1, 1, 1, 'fotos_mascotas/descarga.jfif', 'macho', 'Saludable', 'Lucas', 'Activo y Jugueton', 'Rescatado', '3kl', 5, '50cm', '2022-02-18', 1, NULL),
-(2, 1, 6, 'fotos_mascotas/descarga_1.jfif', 'hembra', 'Saludable', 'Lulu', 'Tranquilo', 'Rescatado de un refugio', '2kl', 1, '30cm', '2023-11-15', 4, NULL);
+(8, 1, 6, 'fotos_mascotas/images.jfif', 'hembra', 'Saludable', 'Lulu', 'Activo y Jugueton', 'Rescatado de un refugio', '20kl', 2, '30cm', '2023-04-11', 6, NULL),
+(9, 1, 1, 'fotos_mascotas/lucas_WypEp8S.jpg', 'macho', 'Saludable', 'Lucas', 'Activo', 'Rescatado', '20kl', 1, '50cm', '2005-04-11', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -608,19 +650,12 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `info_usuario_id`, `id_tipodocumento`, `numero_documento`, `nombres`, `apellidos`, `edad`, `telefono`, `id_tipogenero`, `antecedentes`, `direccion`, `id_rol`) VALUES
-(13, 14, NULL, NULL, 'Usuario', 'Prueba', NULL, 2147483647, NULL, NULL, NULL, NULL);
+(13, 14, 1, 1031421854, 'Usuario', 'Prueba', 20, 2147483647, 1, 'NInguno', 'cra 732 #821', NULL),
+(14, 15, 1, 1041263182, 'Crear', 'Publi', 41, 2147483647, 2, 'Ninguno', 'cra 23 #812', NULL);
 
 --
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `appweb_favoritos`
---
-ALTER TABLE `appweb_favoritos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_favoritos_usuario_id` (`usuario_id`),
-  ADD KEY `fk_favoritos_mascota_id` (`mascota_id`);
 
 --
 -- Indices de la tabla `auth_group`
@@ -779,12 +814,6 @@ ALTER TABLE `usuarios`
 --
 
 --
--- AUTO_INCREMENT de la tabla `appweb_favoritos`
---
-ALTER TABLE `appweb_favoritos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT de la tabla `auth_group`
 --
 ALTER TABLE `auth_group`
@@ -800,7 +829,7 @@ ALTER TABLE `auth_group_permissions`
 -- AUTO_INCREMENT de la tabla `auth_permission`
 --
 ALTER TABLE `auth_permission`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT de la tabla `auth_user`
@@ -830,25 +859,25 @@ ALTER TABLE `django_admin_log`
 -- AUTO_INCREMENT de la tabla `django_content_type`
 --
 ALTER TABLE `django_content_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT de la tabla `django_migrations`
 --
 ALTER TABLE `django_migrations`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `info_usuarios`
 --
 ALTER TABLE `info_usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `mascotas`
 --
 ALTER TABLE `mascotas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -902,18 +931,11 @@ ALTER TABLE `tipos_sangremascotas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `appweb_favoritos`
---
-ALTER TABLE `appweb_favoritos`
-  ADD CONSTRAINT `fk_favoritos_mascota_id` FOREIGN KEY (`mascota_id`) REFERENCES `mascotas` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_favoritos_usuario_id` FOREIGN KEY (`usuario_id`) REFERENCES `info_usuarios` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `auth_group_permissions`
