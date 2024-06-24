@@ -75,14 +75,16 @@
     <main class="container mt-4">
         <div class="row">
             {% for mascota in mascotas %}
-            <div class="col-md-4">
-                <div class="card pet-card">
-                    <a href="{% url 'detalle_mascota' mascota.id %}">
-                        <img src="{{ mascota.foto.url }}" class="card-img-top" alt="{{ mascota.nombre_mascota }}">
-                    </a>
-                    <div class="card-body pet-name">{{ mascota.nombre_mascota }}</div>
-                </div>
-            </div>
+                {% if mascota.id %}
+                    <div class="col-md-4">
+                        <div class="card pet-card">
+                            <a href="{% url 'detalle_mascota' mascota.id %}">
+                                <img src="{{ mascota.foto.url }}" class="card-img-top" alt="{{ mascota.nombre_mascota }}">
+                            </a>
+                            <div class="card-body pet-name">{{ mascota.nombre_mascota }}</div>
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
     </main>

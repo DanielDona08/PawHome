@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BusquedaAvanzadaForm, PublicacionMascotaForm, CompletarDatosForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Mascotas, Usuarios, TiposMascotas, TiposRazasmascotas, TiposColormascotas, TiposSangremascotas, Favoritos
+from .models import Mascotas, Usuarios, TiposMascotas, TiposRazasmascotas, TiposColormascotas, TiposSangremascotas, Favoritos, InfoUsuarios
 
 
 
@@ -12,8 +12,10 @@ def PawHome(request):
 
 
 def inicio(request):
-    mascotas = Mascotas.objects.all().order_by('-id')  
-    context = {'mascotas': mascotas}
+    mascotas = Mascotas.objects.all()
+    context = {
+        'mascotas': mascotas
+    }
     return render(request, 'paginas/inicio.html', context)
 
 def adopcion(request):
@@ -30,14 +32,18 @@ def mi_cuenta(request):
     return render(request, 'paginas/mi_cuenta.html', context)
 
 @login_required
-def publicacion(request):
+def publicar_mascota(request):
     if request.method == 'POST':
-        form = PublicacionMascotaForm(request.POST, request.FILES)
-        print("POST data:", request.POST)
-        print("FILES data:", request.FILES)
+        form = PublicacionMascotaForm(request.POST, request.FILES, instance=Mascotas())
         if form.is_valid():
-            print("Form is valid. Saving...")
-            form.save()
+            mascota = form.save(commit=False)  
+            print(f"Mascota antes de guardar: {mascota}")  
+            current_user = request.user
+            print(f"Usuario actual: {current_user}")  
+            print(f"Mascotas del usuario: {current_user.mascotas.all()}")  
+            mascota.save()  
+            current_user.mascotas.add(mascota)  
+            print(f"ID de la mascota: {mascota.id}")  
             return redirect('inicio')
         else:
             print("Form errors:", form.errors)
@@ -96,6 +102,7 @@ def obtener_razas_mascota(request):
 
 def detalle_mascota(request, pk):
     mascota = get_object_or_404(Mascotas, pk=pk)
+    dueño = mascota.dueños.first()
     
     if request.method == 'POST':
         if not request.user.is_authenticated:
@@ -110,7 +117,8 @@ def detalle_mascota(request, pk):
         return redirect('favoritos')  
     
     context = {
-        'mascota': mascota
+        'mascota': mascota,
+        'dueño': dueño
     }
     return render(request, 'paginas/detalle_mascota.html', context)
 
@@ -150,3 +158,9 @@ def completar_datos(request):
         'form': form
     }
     return render(request, 'paginas/completar_datos.html', contexto)
+
+
+def detalle_dueño(request, usuario_id):
+    usuario = get_object_or_404(InfoUsuarios, id=usuario_id)
+    return render(request, 'paginas/detalle_dueño.html', {'usuario': usuario})
+

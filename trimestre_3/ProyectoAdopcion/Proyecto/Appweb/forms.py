@@ -11,8 +11,22 @@ class BusquedaAvanzadaForm(forms.Form):
 class PublicacionMascotaForm(forms.ModelForm):
     class Meta:
         model = Mascotas
-        fields = '__all__'
-        
+        fields = [
+            'id_tipomascota',
+            'id_tiporaza',
+            'foto',
+            'genero',
+            'condicion_saludmascota',
+            'nombre_mascota',
+            'comportamiento_mascota',
+            'historia_mascota',
+            'peso_mascota',
+            'id_colormascota',
+            'altura_mascota',
+            'fecha_nacimientomascota',
+            'id_tiposangremascota',
+        ]
+
 class CompletarDatosForm(forms.ModelForm):
     id_tipodocumento = forms.ModelChoiceField(queryset=TiposDocumentos.objects.all(), label='Tipo de documento')
     id_tipogenero = forms.ModelChoiceField(queryset=TiposGenero.objects.all(), label='Género')

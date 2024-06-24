@@ -27,50 +27,6 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
-class InfoUsuarios(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(unique=True, max_length=60)
-    password = models.CharField(max_length=128, blank=True, null=True)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    date_joined = models.DateTimeField(default=timezone.now)
-    
-    groups = models.ManyToManyField(
-        Group,
-        related_name='info_usuarios_set',
-        related_query_name='info_usuario',
-        blank=True,
-    )
-    user_permissions = models.ManyToManyField(
-        Permission,
-        related_name='info_usuarios_set',
-        related_query_name='info_usuario',
-        blank=True,
-    )
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
-
-    objects = CustomUserManager()
-
-    class Meta:
-        managed = True
-        db_table = 'info_usuarios'
-
-    def __str__(self):
-        return self.email
-
-    def set_password(self, raw_password):
-        self.password = make_password(raw_password)
-
-    def check_password(self, raw_password):
-        return check_password(raw_password, self.password)
-
-    def has_perm(self, perm, obj=None):
-        return self.is_superuser or self.is_staff
-
-    def has_module_perms(self, app_label):
-        return self.is_superuser or self.is_staff
-
 
 class Roles(models.Model):
     nombre = models.CharField(max_length=50)
@@ -136,7 +92,73 @@ class TiposSangremascotas(models.Model):
         managed = False
         db_table = 'tipos_sangremascotas'
 
+class Mascotas(models.Model):
+    id_tipomascota = models.ForeignKey('TiposMascotas', models.DO_NOTHING, db_column='id_tipomascota', blank=True, null=True)
+    id_tiporaza = models.ForeignKey('TiposRazasmascotas', models.DO_NOTHING, db_column='id_tiporaza', blank=True, null=True)
+    foto = models.ImageField(upload_to='fotos_mascotas', blank=True, null=True)
+    genero = models.CharField(max_length=20, blank=True, null=True)
+    condicion_saludmascota = models.CharField(db_column='condicion_saludmascota', max_length=60, blank=True, null=True)
+    nombre_mascota = models.CharField(max_length=60, blank=True, null=True)
+    comportamiento_mascota = models.CharField(max_length=60, blank=True, null=True)
+    historia_mascota = models.CharField(max_length=60, blank=True, null=True)
+    peso_mascota = models.CharField(max_length=10, blank=True, null=True)
+    id_colormascota = models.ForeignKey('TiposColormascotas', models.DO_NOTHING, db_column='id_colormascota', blank=True, null=True)
+    altura_mascota = models.CharField(max_length=20, blank=True, null=True)
+    fecha_nacimientomascota = models.DateField(db_column='fecha_nacimientomascota', blank=True, null=True)
+    id_tiposangremascota = models.ForeignKey('TiposSangremascotas', models.DO_NOTHING, db_column='id_tiposangremascota', blank=True, null=True)
+    
 
+    def __str__(self):
+        return self.nombre_mascota
+    
+    class Meta:
+        managed = True
+        db_table = 'mascotas'
+
+class InfoUsuarios(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(unique=True, max_length=60)
+    password = models.CharField(max_length=128, blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    date_joined = models.DateTimeField(default=timezone.now)
+    mascotas = models.ManyToManyField(Mascotas, related_name='dueños')
+    
+    groups = models.ManyToManyField(
+        Group,
+        related_name='info_usuarios_set',
+        related_query_name='info_usuario',
+        blank=True,
+    )
+    user_permissions = models.ManyToManyField(
+        Permission,
+        related_name='info_usuarios_set',
+        related_query_name='info_usuario',
+        blank=True,
+    )
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
+
+    class Meta:
+        managed = True
+        db_table = 'info_usuarios'
+
+    def __str__(self):
+        return self.email
+
+    def set_password(self, raw_password):
+        self.password = make_password(raw_password)
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)
+
+    def has_perm(self, perm, obj=None):
+        return self.is_superuser or self.is_staff
+
+    def has_module_perms(self, app_label):
+        return self.is_superuser or self.is_staff
 
 class Usuarios(models.Model):
     id_tipodocumento = models.ForeignKey('TiposDocumentos', models.DO_NOTHING, db_column='id_tipodocumento', blank=True, null=True)
@@ -150,6 +172,10 @@ class Usuarios(models.Model):
     direccion = models.CharField(max_length=60, blank=True, null=True)
     id_rol = models.ForeignKey('Roles', models.DO_NOTHING, db_column='id_rol', blank=True, null=True)
     info_usuario = models.OneToOneField(InfoUsuarios, on_delete=models.CASCADE, primary_key=True, related_name='usuario')
+    
+    
+    def __str__(self):
+        return self.nombres
 
     class Meta:
         managed = True
@@ -165,28 +191,7 @@ class Usuarios(models.Model):
         return False
     
 
-class Mascotas(models.Model):
-    id_tipomascota = models.ForeignKey('TiposMascotas', models.DO_NOTHING, db_column='id_tipomascota', blank=True, null=True)
-    id_tiporaza = models.ForeignKey('TiposRazasmascotas', models.DO_NOTHING, db_column='id_tiporaza', blank=True, null=True)
-    foto = models.ImageField(upload_to='fotos_mascotas', blank=True, null=True)
-    genero = models.CharField(max_length=20, blank=True, null=True)
-    condicion_saludmascota = models.CharField(db_column='condicion_saludmascota', max_length=60, blank=True, null=True)
-    nombre_mascota = models.CharField(max_length=60, blank=True, null=True)
-    comportamiento_mascota = models.CharField(max_length=60, blank=True, null=True)
-    historia_mascota = models.CharField(max_length=60, blank=True, null=True)
-    peso_mascota = models.CharField(max_length=10, blank=True, null=True)
-    id_colormascota = models.ForeignKey('TiposColormascotas', models.DO_NOTHING, db_column='id_colormascota', blank=True, null=True)
-    altura_mascota = models.CharField(max_length=20, blank=True, null=True)
-    fecha_nacimientomascota = models.DateField(db_column='fecha_nacimientomascota', blank=True, null=True)
-    id_tiposangremascota = models.ForeignKey('TiposSangremascotas', models.DO_NOTHING, db_column='id_tiposangremascota', blank=True, null=True)
-    id_dueño = models.ForeignKey(Usuarios, models.DO_NOTHING, db_column='id_dueño', blank=True, null=True)
 
-    def __str__(self):
-        return self.nombre_mascota
-    
-    class Meta:
-        managed = False
-        db_table = 'mascotas'
 
 class Favoritos(models.Model):
     usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
