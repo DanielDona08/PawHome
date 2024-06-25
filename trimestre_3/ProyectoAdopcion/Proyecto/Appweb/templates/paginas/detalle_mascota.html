@@ -92,7 +92,7 @@
                             {% csrf_token %}
                             <button type="submit" class="btn btn-primary w-100">☆ Añadir a favoritos</button>
                         </form>
-                        <a href="{% url 'adopcion' %}" class="btn btn-primary w-100 mt-3">🤍 ¡Adoptar!</a>
+                        <a href="{% url 'adopcion' mascota.id %}" class="btn btn-primary w-100 mt-3">🤍 ¡Adoptar!</a>
                     {% endif %}
                 {% else %}
                     <a href="{% url 'iniciar_sesion' %}?next={% url 'detalle_mascota' mascota.id %}" class="btn btn-primary w-100 mt-2">☆ Añadir a favoritos</a>

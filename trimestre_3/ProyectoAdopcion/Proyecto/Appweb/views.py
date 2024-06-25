@@ -3,16 +3,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import BusquedaAvanzadaForm, PublicacionMascotaForm, CompletarDatosForm, MascotaForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Mascotas, Usuarios, TiposMascotas, TiposRazasmascotas, TiposColormascotas, TiposSangremascotas, Favoritos, InfoUsuarios
-
+from .models import Mascotas, Usuarios, TiposMascotas, TiposRazasmascotas, TiposColormascotas, TiposSangremascotas, Favoritos, InfoUsuarios, Adopcion, Notificacion
+from django.core.mail import send_mail
 
 
 def PawHome(request):
     return HttpResponse('Bienvenidos a PawHome')
-
-def confirmacion_adopcion(request):
-    return render(request, 'paginas/confirmacion_adopcion.html')
-
 
 def inicio(request):
     mascotas = Mascotas.objects.all()
@@ -21,8 +17,6 @@ def inicio(request):
     }
     return render(request, 'paginas/inicio.html', context)
 
-def adopcion(request):
-    return render(request, 'paginas/adopcion.html')
 
 def favoritos(request):
     return render(request, 'paginas/favoritos.html')
@@ -204,4 +198,70 @@ def borrar_mascota(request, pk):
         return redirect('inicio')
 
     return render(request, 'paginas/borrar_mascota.html', {'mascota': mascota})
+
+
+@login_required
+def adopcion_view(request, mascota_id):
+    mascota = get_object_or_404(Mascotas, id=mascota_id)
+    
+    if request.method == 'POST':
+        nombre = request.POST['nombre']
+        edad = request.POST['edad']
+        tipo_documento = request.POST['tipoDocumento']
+        numero_documento = request.POST['numeroDocumento']
+        genero = request.POST['genero']
+        telefono = request.POST['telefono']
+        email = request.POST['email']
+        antecedentes = request.POST['antecedentes']
+        motivo = request.POST['motivo']
+        
+        adopcion = Adopcion.objects.create(
+            usuario=request.user,
+            mascota=mascota,
+            nombre=nombre,
+            edad=edad,
+            tipoDocumento=tipo_documento,
+            numeroDocumento=numero_documento,
+            genero=genero,
+            telefono=telefono,
+            email=email,
+            antecedentes=antecedentes,
+            motivo=motivo
+        )
+        
+        # Crear una notificación para el dueño de la mascota
+        dueño = mascota.dueños.first()
+        mensaje = f'Tienes una nueva solicitud de adopción para tu mascota {mascota.nombre_mascota}.'
+        Notificacion.objects.create(usuario=dueño, mensaje=mensaje, adopcion = adopcion)
+        
+        # Redirigir a la página de confirmación de adopción
+        return redirect('adopcion_confirmada', mascota_id=mascota.id)
+
+    return render(request, 'paginas/adopcion.html', {'mascota': mascota})
+
+
+@login_required
+def adopcion_confirmada_view(request, mascota_id):
+    mascota = get_object_or_404(Mascotas, id=mascota_id)
+    return render(request, 'paginas/adopcion_confirmada.html', {'mascota': mascota})
+
+
+
+
+def notificaciones_view(request):
+    notificaciones = Notificacion.objects.filter(usuario=request.user)
+    context = {
+        'notificaciones': notificaciones
+    }
+    return render(request, 'paginas/notificaciones.html', context)
+
+
+@login_required
+def detalle_solicitud_adopcion(request, adopcion_id):
+    adopcion = get_object_or_404(Adopcion, pk=adopcion_id)
+    context = {
+        'adopcion': adopcion
+    }
+    return render(request, 'paginas/detalle_solicitud_adopcion.html', context)
+
 
