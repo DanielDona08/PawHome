@@ -11,19 +11,20 @@
 <body>
     <div class="container mt-5">
         <h2 class="text-center">Formulario de Adopción de Mascotas</h2>
-        <form>
+        <form method="POST" action="{% url 'adopcion' mascota.id %}">
+            {% csrf_token %}
             <!-- Información del adoptante -->
             <div class="form-group">
                 <label for="nombre">Nombre completo</label>
-                <input type="text" class="form-control" id="nombre" placeholder="Ingresa tu nombre completo" required>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre completo" required>
             </div>
             <div class="form-group">
                 <label for="edad">Edad</label>
-                <input type="number" class="form-control" id="edad" placeholder="Ingresa tu edad" required>
+                <input type="number" class="form-control" id="edad" name="edad" placeholder="Ingresa tu edad" required>
             </div>
             <div class="form-group">
                 <label for="tipoDocumento">Tipo de documento</label>
-                <select class="form-control" id="tipoDocumento" required>
+                <select class="form-control" id="tipoDocumento" name="tipoDocumento" required>
                     <option value="CC">Cédula de Ciudadanía</option>
                     <option value="CE">Cédula de Extranjería</option>
                     <option value="PP">Pasaporte</option>
@@ -35,31 +36,31 @@
             </div>
             <div class="form-group">
                 <label for="numeroDocumento">Número de documento</label>
-                <input type="text" class="form-control" id="numeroDocumento" placeholder="Ingresa tu número de documento" required>
+                <input type="text" class="form-control" id="numeroDocumento" name="numeroDocumento" placeholder="Ingresa tu número de documento" required>
             </div>
             <div class="form-group">
                 <label for="genero">Género</label>
-                <select class="form-control" id="genero" required>
+                <select class="form-control" id="genero" name="genero" required>
                     <option value="hombre">Hombre</option>
                     <option value="mujer">Mujer</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="telefono">Teléfono</label>
-                <input type="tel" class="form-control" id="telefono" placeholder="Ingresa tu teléfono" required>
+                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ingresa tu teléfono" required>
             </div>
             <div class="form-group">
                 <label for="email">Correo electrónico</label>
-                <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo electrónico" required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
             </div>
             <div class="form-group">
                 <label for="antecedentes">Historial de mascotas</label>
-                <textarea class="form-control" id="antecedentes" rows="3" placeholder="¿Ha tenido o tiene mascotas viviendo con usted actualmente?" required></textarea>
+                <textarea class="form-control" id="antecedentes" name="antecedentes" rows="3" placeholder="¿Ha tenido o tiene mascotas viviendo con usted actualmente?" required></textarea>
             </div>
 
             <div class="form-group">
                 <label for="motivo">Motivo de la adopción</label>
-                <textarea class="form-control" id="motivo" rows="3" placeholder="Explica el motivo por el cual deseas tener una mascota" required></textarea>
+                <textarea class="form-control" id="motivo" name="motivo" rows="3" placeholder="Explica el motivo por el cual deseas tener una mascota" required></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary btn-block">Enviar</button>
@@ -71,4 +72,3 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-

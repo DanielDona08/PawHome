@@ -58,6 +58,9 @@
                             <li class="nav-item">
                                 <a class="btn btn-light me-2" href="{% url 'mi_cuenta' %}">Mi cuenta</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="btn btn-light me-2" href="{% url 'notificaciones' %}">Notificaciones</a>
+                            </li>
                         {% else %}
                             <li class="nav-item">
                                 <a class="btn btn-light me-2" href="{% url 'iniciar_sesion' %}?next={% url 'publicacion' %}">Iniciar sesión</a>
@@ -73,6 +76,7 @@
     </header>
 
     <main class="container mt-4">
+        {% block content %}
         <div class="row">
             {% for mascota in mascotas %}
                 {% if mascota.id %}
@@ -87,6 +91,7 @@
                 {% endif %}
             {% endfor %}
         </div>
+        {% endblock %}
     </main>
 
     <footer class="bg-light text-center py-3 mt-4">

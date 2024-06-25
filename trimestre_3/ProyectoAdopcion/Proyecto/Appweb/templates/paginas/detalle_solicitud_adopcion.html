@@ -1,0 +1,33 @@
+{% extends 'plantilla.html' %}
+{% load static %}
+
+{% block title %}
+    Detalle de Solicitud de Adopción - PawHome
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mt-4 mb-4">Detalle de Solicitud de Adopción</h2>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Datos de la solicitud:</h5>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Nombre:</strong> {{ adopcion.nombre }}</li>
+                    <li class="list-group-item"><strong>Edad:</strong> {{ adopcion.edad }}</li>
+                    <li class="list-group-item"><strong>Tipo de Documento:</strong> {{ adopcion.tipoDocumento }}</li>
+                    <li class="list-group-item"><strong>Número de Documento:</strong> {{ adopcion.numeroDocumento }}</li>
+                    <li class="list-group-item"><strong>Género:</strong> {{ adopcion.genero }}</li>
+                    <li class="list-group-item"><strong>Teléfono:</strong> {{ adopcion.telefono }}</li>
+                    <li class="list-group-item"><strong>Email:</strong> {{ adopcion.email }}</li>
+                    <li class="list-group-item"><strong>Antecedentes:</strong> {{ adopcion.antecedentes }}</li>
+                    <li class="list-group-item"><strong>Motivo:</strong> {{ adopcion.motivo }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+
+

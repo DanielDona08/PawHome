@@ -219,3 +219,12 @@ class Adopcion(models.Model):
     def __str__(self):
         return f"Adopción de {self.nombre} por {self.usuario.email}"
 
+class Notificacion(models.Model):
+    usuario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notificaciones')
+    mensaje = models.TextField()
+    leido = models.BooleanField(default=False)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    adopcion = models.ForeignKey(Adopcion, on_delete=models.CASCADE, null=True, blank=True) # Añade este campo
+
+    def __str__(self):
+        return f"Notificación para {self.usuario.email} - {self.mensaje}"

@@ -144,3 +144,5 @@ AUTH_USER_MODEL = 'Core.InfoUsuarios'
 LOGIN_URL = 'iniciar_sesion'
 LOGIN_REDIRECT_URL = 'completar_datos_usuario'
 LOGOUT_REDIRECT_URL = 'inicio'
+
+
