@@ -1,0 +1,36 @@
+{% extends 'plantilla.html' %}
+
+{% block content %}
+    <main class="container mt-4">
+        <h1>Búsqueda Avanzada</h1>
+        <form id="busquedaAvanzadaForm" method="POST" action="{% url 'busqueda_avanzada' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary mt-3">Buscar</button>
+        </form>
+
+        {% if resultados %}
+            <div class="row mt-4">
+                {% for mascota in resultados %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card pet-card">
+                            <a href="{% url 'detalle_mascota' mascota.id %}">
+                                <img src="{{ mascota.foto.url }}" class="card-img-top" alt="{{ mascota.nombre_mascota }}">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ mascota.nombre_mascota }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col">
+                        <p>No se encontraron mascotas con los filtros seleccionados.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </main>
+{% endblock %}
+
+
+

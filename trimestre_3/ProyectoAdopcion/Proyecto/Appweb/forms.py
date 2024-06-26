@@ -2,11 +2,11 @@ from django import forms
 from .models import TiposDocumentos, TiposGenero, TiposMascotas, TiposRazasmascotas, TiposColormascotas, Mascotas, Usuarios, TiposSangremascotas
 
 class BusquedaAvanzadaForm(forms.Form):
-    tipo_mascota = forms.ModelChoiceField(queryset=TiposMascotas.objects.all(), empty_label=None)
-    raza_mascota = forms.ModelChoiceField(queryset=TiposRazasmascotas.objects.all(), empty_label=None)
-    genero_mascota = forms.ChoiceField(choices=[('macho', 'Macho'), ('hembra', 'Hembra')])
-    color_mascota = forms.ModelChoiceField(queryset=TiposColormascotas.objects.all(), empty_label=None)
-    tamano_mascota = forms.ChoiceField(choices=[('pequeno', 'Pequeño'), ('mediano', 'Mediano'), ('grande', 'Grande')])
+    tipo_mascota = forms.ModelChoiceField(queryset=TiposMascotas.objects.all(), empty_label="Selecciona el tipo de mascota")
+    raza_mascota = forms.ModelChoiceField(queryset=TiposRazasmascotas.objects.all(), empty_label="Selecciona la raza de la mascota")
+    genero_mascota = forms.ChoiceField(choices=[('macho', 'Macho'), ('hembra', 'Hembra')], required=True)
+    color_mascota = forms.ModelChoiceField(queryset=TiposColormascotas.objects.all(), empty_label="Selecciona el color de la mascota")
+
 
 class PublicacionMascotaForm(forms.ModelForm):
     class Meta:

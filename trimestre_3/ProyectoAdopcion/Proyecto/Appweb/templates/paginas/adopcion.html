@@ -6,69 +6,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Adopción de Mascotas</title>
     <link rel="icon" type="image/x-icon" href="{% static 'media/huella.ico' %}">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        .navbar-custom {
+            background-color: #00aaff;
+        }
+        .navbar-nav .nav-link {
+            color: white !important;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .btn-custom {
+            background-color: #00aaff;
+            border: none;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2 class="text-center">Formulario de Adopción de Mascotas</h2>
-        <form method="POST" action="{% url 'adopcion' mascota.id %}">
-            {% csrf_token %}
-            <!-- Información del adoptante -->
-            <div class="form-group">
-                <label for="nombre">Nombre completo</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre completo" required>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'inicio' %}">
+                    <img src="{% static 'media/Imagen2.jfif' %}" alt="PawHome Logo" height="40" class="d-inline-block align-text-top">
+                </a>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'publicacion' %}">Dar en adopción</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'favoritos' %}">Tus favoritos</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-3">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="btn btn-light me-2" href="{% url 'logout' %}">Cerrar sesión</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-light me-2" href="{% url 'mi_cuenta' %}">Mi cuenta</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-light me-2" href="{% url 'notificaciones' %}">Notificaciones</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="btn btn-light me-2" href="{% url 'iniciar_sesion' %}?next={% url 'publicacion' %}">Iniciar sesión</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-primary" href="{% url 'registrarse' %}">Crear cuenta</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="edad">Edad</label>
-                <input type="number" class="form-control" id="edad" name="edad" placeholder="Ingresa tu edad" required>
-            </div>
-            <div class="form-group">
-                <label for="tipoDocumento">Tipo de documento</label>
-                <select class="form-control" id="tipoDocumento" name="tipoDocumento" required>
-                    <option value="CC">Cédula de Ciudadanía</option>
-                    <option value="CE">Cédula de Extranjería</option>
-                    <option value="PP">Pasaporte</option>
-                    <option value="RCN">Registro Civil de Nacimiento</option>
-                    <option value="TRE">Tarjeta de Registro de Extranjería</option>
-                    <option value="DNI">Documento Nacional de Identidad</option>
-                    <option value="PRP">Permiso de Residencia Permanente</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="numeroDocumento">Número de documento</label>
-                <input type="text" class="form-control" id="numeroDocumento" name="numeroDocumento" placeholder="Ingresa tu número de documento" required>
-            </div>
-            <div class="form-group">
-                <label for="genero">Género</label>
-                <select class="form-control" id="genero" name="genero" required>
-                    <option value="hombre">Hombre</option>
-                    <option value="mujer">Mujer</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="telefono">Teléfono</label>
-                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ingresa tu teléfono" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Correo electrónico</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
-            </div>
-            <div class="form-group">
-                <label for="antecedentes">Historial de mascotas</label>
-                <textarea class="form-control" id="antecedentes" name="antecedentes" rows="3" placeholder="¿Ha tenido o tiene mascotas viviendo con usted actualmente?" required></textarea>
-            </div>
+        </nav>
+    </header>
 
-            <div class="form-group">
-                <label for="motivo">Motivo de la adopción</label>
-                <textarea class="form-control" id="motivo" name="motivo" rows="3" placeholder="Explica el motivo por el cual deseas tener una mascota" required></textarea>
-            </div>
+    <main class="container mt-5">
+        <div class="form-container">
+            <h2 class="text-center mb-4">Formulario de Adopción de Mascotas</h2>
+            <form method="POST" action="{% url 'adopcion' mascota.id %}">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <label for="nombre">Nombre completo</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingresa tu nombre completo" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="edad">Edad</label>
+                    <input type="number" class="form-control" id="edad" name="edad" placeholder="Ingresa tu edad" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="tipoDocumento">Tipo de documento</label>
+                    <select class="form-control" id="tipoDocumento" name="tipoDocumento" required>
+                        <option value="CC">Cédula de Ciudadanía</option>
+                        <option value="CE">Cédula de Extranjería</option>
+                        <option value="PP">Pasaporte</option>
+                        <option value="RCN">Registro Civil de Nacimiento</option>
+                        <option value="TRE">Tarjeta de Registro de Extranjería</option>
+                        <option value="DNI">Documento Nacional de Identidad</option>
+                        <option value="PRP">Permiso de Residencia Permanente</option>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="numeroDocumento">Número de documento</label>
+                    <input type="text" class="form-control" id="numeroDocumento" name="numeroDocumento" placeholder="Ingresa tu número de documento" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="genero">Género</label>
+                    <select class="form-control" id="genero" name="genero" required>
+                        <option value="hombre">Hombre</option>
+                        <option value="mujer">Mujer</option>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="telefono">Teléfono</label>
+                    <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ingresa tu teléfono" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="antecedentes">Historial de mascotas</label>
+                    <textarea class="form-control" id="antecedentes" name="antecedentes" rows="3" placeholder="¿Ha tenido o tiene mascotas viviendo con usted actualmente?" required></textarea>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="motivo">Motivo de la adopción</label>
+                    <textarea class="form-control" id="motivo" name="motivo" rows="3" placeholder="Explica el motivo por el cual deseas tener una mascota" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+                <button type="button" class="btn btn-secondary btn-block mt-2" onclick="window.history.back()">Regresar</button>
+            </form>
+        </div>
+    </main>
 
-            <button type="submit" class="btn btn-primary btn-block">Enviar</button>
-        </form>
-    </div>
+    <footer class="bg-light text-center py-3 mt-4">
+        <div class="container">
+            <p>&copy; 2024 PawHome</p>
+        </div>
+    </footer>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 </html>
