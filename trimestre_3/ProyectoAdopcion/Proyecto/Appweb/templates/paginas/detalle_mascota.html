@@ -95,8 +95,8 @@
                         <a href="{% url 'adopcion' mascota.id %}" class="btn btn-primary w-100 mt-3">🤍 ¡Adoptar!</a>
                     {% endif %}
                 {% else %}
-                    <a href="{% url 'iniciar_sesion' %}?next={% url 'detalle_mascota' mascota.id %}" class="btn btn-primary w-100 mt-2">☆ Añadir a favoritos</a>
-                    <a href="{% url 'iniciar_sesion' %}?next={% url 'adopcion' %}" class="btn btn-primary w-100 mt-3">🤍 ¡Adoptar!</a>
+                    <a href="{% url 'iniciar_sesion' %}?next={{ request.path }}" class="btn btn-primary w-100 mt-2">☆ Añadir a favoritos</a>
+                    <a href="{% url 'iniciar_sesion' %}?next={{ request.path }}" class="btn btn-primary w-100 mt-3">🤍 ¡Adoptar!</a>
                 {% endif %}
             </div>
             <div class="col-md-9">
@@ -189,3 +189,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 </html>
+

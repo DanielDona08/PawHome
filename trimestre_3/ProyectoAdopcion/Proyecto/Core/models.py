@@ -215,6 +215,7 @@ class Adopcion(models.Model):
     email = models.EmailField()
     antecedentes = models.TextField()
     motivo = models.TextField()
+    mascota = models.ForeignKey(Mascotas, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Adopción de {self.nombre} por {self.usuario.email}"

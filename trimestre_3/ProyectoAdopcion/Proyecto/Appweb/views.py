@@ -202,7 +202,7 @@ def borrar_mascota(request, pk):
 
 @login_required
 def adopcion_view(request, mascota_id):
-    mascota = get_object_or_404(Mascotas, id=mascota_id)
+    mascota = get_object_or_404(Mascotas, pk=mascota_id)
     
     if request.method == 'POST':
         nombre = request.POST['nombre']
